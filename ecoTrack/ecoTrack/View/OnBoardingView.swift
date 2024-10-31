@@ -16,19 +16,19 @@ struct OnBoardingView: View {
                 Image("backGreen")
                     .resizable()
                     .scaledToFit()
-               
+                
                 Spacer()
             }
-//            VStack(alignment: .leading) {
+            //            VStack(alignment: .leading) {
             HStack {
                 
                 Image("recicle")
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }.frame( maxWidth:.infinity)
-//            }
+            //            }
         }
         .ignoresSafeArea()
-
+        
     }
 }
 

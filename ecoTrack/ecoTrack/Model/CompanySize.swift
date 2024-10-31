@@ -15,4 +15,15 @@ enum CompanySize: String, Identifiable, CaseIterable{
     var id: String {
         return self.rawValue
     }
+    
+    var icon: String {
+        switch self {
+        case .micro:
+            return "porteMicro"
+        case .pequena:
+            return "portePequeno"
+        case .media:
+            return "porteMedio"
+        }
+    }
 }
