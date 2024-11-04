@@ -26,7 +26,6 @@ struct LoginView: View {
                         VStack(alignment: .leading, spacing: 10){
                             Text("Nos conte mais sobre sua empresa")
                                 .font(.system(size: 33, weight: .bold))
-                                .lineLimit(3)
                             Text("Complete o cadastro com as informações da sua empresa")
                                 .font(.system(size: 19, weight: .regular))
                         }
