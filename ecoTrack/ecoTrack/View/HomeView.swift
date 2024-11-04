@@ -7,34 +7,6 @@
 
 import SwiftUI
 
-enum Recurso: String, CaseIterable{
-    case agua = "Água"
-    case energia = "Energia"
-    case residuos = "Resíduos"
-    
-    var icone: String {
-        switch self {
-        case .agua:
-            return "waterIcon"
-        case .energia:
-            return "energyIcon"
-        case .residuos:
-            return "wasteIcon"
-        }
-    }
-    
-    var cor: [Color] {
-        switch self {
-        case .agua:
-            return [.azulAgua1, .azulAgua]
-        case .energia:
-            return [.amareloEnergia1, .amareloEnergia]
-        case .residuos:
-            return [.laranjaResi1, .laranjaResi]
-        }
-    }
-}
-
 
 struct HomeView: View {
     var body: some View {
@@ -99,7 +71,7 @@ struct HomeView: View {
                         Spacer()
                             .frame(height: 10)
                         
-                        ForEach(Recurso.allCases, id: \.self){ recurso in
+                        ForEach(Resources.allCases, id: \.self){ recurso in
                             ButtonView(recurso: recurso).frame(maxWidth: .infinity)
                         }
                         

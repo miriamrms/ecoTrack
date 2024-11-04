@@ -24,7 +24,7 @@ struct LoginButton: View {
             }
             .frame(height: 45)
             .frame(maxWidth: .infinity)
-            .background(Color(isButtonValid ? "verdeClaro": "verdeClaro-1"))
+            .background(Color(isButtonValid ? "verdeClaro": "verdeClaroLight"))
             .foregroundStyle(Color.white)
             .font(.system(size: 16, weight: .bold))
             .cornerRadius(8)
