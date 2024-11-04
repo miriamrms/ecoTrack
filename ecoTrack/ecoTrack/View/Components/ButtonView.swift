@@ -11,7 +11,7 @@ import SwiftUI
 struct ButtonView: View {
 
     @State var valor: Double = 0.0
-    var recurso: Recurso
+    var recurso: Resources
     
     var body: some View {
        

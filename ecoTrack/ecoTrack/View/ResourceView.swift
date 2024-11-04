@@ -132,6 +132,7 @@ struct ResourceView: View {
                         ResourceGoalsView(resource: resource)
                         ResourceGoalsView(resource: resource)
                     }
+                    .padding(.bottom, 30)
                     
                 }
                 .frame(maxWidth: .infinity)
