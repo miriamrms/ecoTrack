@@ -31,7 +31,6 @@ struct LoginView: View {
                         }
                         .foregroundStyle(Color.white)
                         .padding(20)
-                        
                     }
                     .frame(height: 480)
                     .background(Color("verdeClaro"))
@@ -46,7 +45,7 @@ struct LoginView: View {
                             .modifier(customViewModifier())
                         }
                         HStack{
-                            Image("portePequeno")
+                            Image(companySize == nil ? "portePequeno" : companySize!.icon)
                             VStack(alignment: .leading){
                                 Text("Porte da Empresa")
                                     .font(.system(size: 16, weight: .bold))

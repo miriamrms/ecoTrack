@@ -9,7 +9,8 @@ import SwiftUI
 
 
 struct ButtonView: View {
-    @State var valor: Double = 1.0
+
+    @State var valor: Double = 0.0
     var recurso: Resources
     
     var body: some View {
