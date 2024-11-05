@@ -9,6 +9,9 @@ import SwiftUI
 
 
 struct HomeView: View {
+    
+    @State var ShowModal = false
+    
     var body: some View {
         ScrollView{
             VStack(alignment: .leading){
@@ -35,21 +38,19 @@ struct HomeView: View {
                                 .fontWeight(.regular)
                         }
                         Spacer()
-                        Button {}
+                        Button(action:  {
+                            ShowModal.toggle()
                             
-                            label: {
+                        }
+                            
+                            ,label: {
                                 Image("edit").padding(.top, 10)
-                                    }
-                       
-                            
-                       
+                                    })
                             
                     }.frame(maxWidth: .infinity)
-                    
-//                    .overlay {
-//                                            Rectangle()
-//                                                .stroke()
-//                                        }
+                        .sheet(isPresented: $ShowModal) {
+                            EditProfileView()
+                        }
                     
                     Rectangle()//divisoria verde
                         .frame(maxWidth: .infinity)
@@ -81,10 +82,7 @@ struct HomeView: View {
                     }
                     
                 }
-                .overlay {
-                    Rectangle()
-                        .stroke()
-                }
+             
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 20)
               
