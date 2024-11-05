@@ -118,6 +118,7 @@ struct ResourceView: View {
                         }
                     }
                 }
+                .scrollTargetBehavior(.paging)
                 VStack(alignment: .leading){
                     HStack{
                         Image("greenLeaf")

@@ -44,6 +44,7 @@ struct AnalysisButtonView: View {
             
         }
         .frame(maxWidth: 312, maxHeight: 75)
+        .padding(.leading,7)
        
     }
 }
