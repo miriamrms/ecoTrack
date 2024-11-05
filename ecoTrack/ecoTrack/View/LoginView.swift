@@ -26,13 +26,11 @@ struct LoginView: View {
                         VStack(alignment: .leading, spacing: 10){
                             Text("Nos conte mais sobre sua empresa")
                                 .font(.system(size: 33, weight: .bold))
-                                .lineLimit(3)
                             Text("Complete o cadastro com as informações da sua empresa")
                                 .font(.system(size: 19, weight: .regular))
                         }
                         .foregroundStyle(Color.white)
                         .padding(20)
-                        
                     }
                     .frame(height: 480)
                     .background(Color("verdeClaro"))
@@ -47,7 +45,7 @@ struct LoginView: View {
                             .modifier(customViewModifier())
                         }
                         HStack{
-                            Image("portePequeno")
+                            Image(companySize == nil ? "portePequeno" : companySize!.icon)
                             VStack(alignment: .leading){
                                 Text("Porte da Empresa")
                                     .font(.system(size: 16, weight: .bold))

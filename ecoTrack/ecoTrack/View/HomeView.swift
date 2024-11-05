@@ -35,7 +35,6 @@ enum Recurso: String, CaseIterable{
     }
 }
 
-
 struct HomeView: View {
     var body: some View {
         ScrollView{
@@ -99,7 +98,7 @@ struct HomeView: View {
                         Spacer()
                             .frame(height: 10)
                         
-                        ForEach(Recurso.allCases, id: \.self){ recurso in
+                        ForEach(Resources.allCases, id: \.self){ recurso in
                             ButtonView(recurso: recurso).frame(maxWidth: .infinity)
                         }
                         
@@ -167,7 +166,7 @@ struct HomeView: View {
                 
             }
           
-        }
+        } .navigationBarBackButtonHidden(true)
        
     }
 }
