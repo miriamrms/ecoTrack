@@ -26,11 +26,11 @@ enum Recurso: String, CaseIterable{
     var cor: [Color] {
         switch self {
         case .agua:
-            return [.azulAgua1, .azulAgua]
+            return [.azulAguaLight, .azulAgua]
         case .energia:
-            return [.amareloEnergia1, .amareloEnergia]
+            return [.amareloEnergiaLight, .amareloEnergia]
         case .residuos:
-            return [.laranjaResi1, .laranjaResi]
+            return [.laranjaResiLight, .laranjaResi]
         }
     }
 }
