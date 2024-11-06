@@ -13,10 +13,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+
     @State private var hasCompletedOnboarding: Bool
     @State private var hasCompletedLogin: Bool
+    @StateObject var companyViewModel: CompanyViewModel = CompanyViewModel(dataSource: .shared)
     
     init() {
         // Verifica se o usuario já completou o onboarding e o login

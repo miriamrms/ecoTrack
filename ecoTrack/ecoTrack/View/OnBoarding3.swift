@@ -13,66 +13,41 @@ struct OnBoarding3: View {
         
         NavigationStack{
             
-            VStack{
-                
-                Image("certifIcon")
-                
-                
+            
+            
+            ZStack {
+                Image("backgroundOnBoarding")
                     .resizable()
-                    .scaledToFill()
+                    .ignoresSafeArea()
                 
-                
-                VStack {
-                    VStack(alignment: .center){
-                        Text("Encontre certificados")
-                            .font(.system(size: 33))
-                            .foregroundStyle(.verdeClaro)
-                            .bold()
-                            .padding(.bottom, 10)
-                        
-                        
-                        Text("Planeje ações para alcançar certificados\n de sustentabilidade para sua empresa")
-                            .font(.system(size: 16))
-                            .foregroundStyle(.verdeClaro)
-                            .multilineTextAlignment(.center)
-                    }
-                    //                .overlay {
-                    //                    Rectangle()
-                    //                        .stroke()
-                    //                }
+                VStack(alignment: .center, spacing: 20){
                     
                     Spacer()
                     
+                    Image("certificateIcon1")
+                        //.padding()
+                        .padding(.top)
+                        .padding(.top)
+                        .padding(.top)
                     
+               Text("Encontre certificados")
+                        .font(.system(size: 33))
+                        .foregroundStyle(.verdeClaro)
+                        .bold()
+                        .padding(.top)
+        
+                            
+                    Text("Planeje ações para alcançar certificados\n de sustentabilidade para sua empresa")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.verdeClaro)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom)
                     
-//                    HStack {
-//                        NavigationLink(destination: HomeView()) {
-//                            SkipButtonView()}
-//                        Spacer()
-//                        NavigationLink(destination: HomeView()) {
-//                            NextButtonView ()}
-//                        
-//                    }.frame(width: 352, height: 48).padding(.bottom,60)
-//                    
-                    //                    .overlay {
-                    //                        Rectangle()
-                    //                            .stroke()
-                    //                    }
-                    
-                    
+                    Spacer()
                 }
-                //            .overlay {
-                //                Rectangle()
-                //                    .stroke()
-                //                
-                //            }
-                
-                
-                
+                .navigationBarBackButtonHidden(true)
+                .navigationBarBackButtonHidden(true)
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarBackButtonHidden(true)
-            .ignoresSafeArea()
         }.navigationBarBackButtonHidden(true)
     }
 }

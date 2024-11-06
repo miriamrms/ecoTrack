@@ -15,27 +15,35 @@ struct OnBoarding1: View {
         NavigationStack {
             
             ZStack {
-                Image("backGreen")
+                Image("backgroundOnBoarding")
                     .resizable()
                     .ignoresSafeArea()
                 
-                VStack(alignment: .center){
+                VStack(alignment: .center, spacing: 20){
+
                     Spacer()
+                  
+                    Spacer()
+                    
                     Image("recicle")
-                        
-                        VStack(alignment: .center){
-                            Text("Bem vindos!")
+
+                        .frame(maxWidth: .infinity, alignment:.topTrailing )
+
+                    
+                    Spacer()
+                    
+                    Text("Bem vindos!")
                                 .font(.system(size: 44))
                                 .foregroundStyle(.verdeClaro)
                                 .bold()
-                            Text("Gerencie sua empresa rumo a \n sustentabilidade")
+
+                    Text("Gerencie sua empresa rumo a \n sustentabilidade")
                                 .font(.system(size: 16))
                                 .foregroundStyle(.verdeClaro)
                                 .multilineTextAlignment(.center)
-                            
-                        }
-                        
-                        Spacer()
+
+                    Spacer()
+                        .frame(maxHeight: .infinity)
                     
                 }
             }

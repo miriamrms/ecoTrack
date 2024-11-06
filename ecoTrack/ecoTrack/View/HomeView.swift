@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 enum Recurso: String, CaseIterable{
     case agua = "Água"
@@ -36,6 +37,10 @@ enum Recurso: String, CaseIterable{
 }
 
 struct HomeView: View {
+  
+    @EnvironmentObject var companyViewModel: CompanyViewModel
+    @State var ShowModal = false
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -49,25 +54,33 @@ struct HomeView: View {
                             .frame(width: 45, height: 45)
                             .cornerRadius(8)
                         
-                        VStack(alignment: .leading) {
-                            Text("Nome empresa")
+
+                        VStack(alignment: .leading ){
+                            Text(companyViewModel.company.name)
                                 .font(.system(size: 19))
                                 .foregroundStyle(.verdeClaro)
                                 .bold()
                             
-                            Text("Segmento")
+                            Text(companyViewModel.company.companySize.rawValue)
                                 .font(.system(size: 14))
                                 .foregroundStyle(.verdeClaro)
                                 .fontWeight(.regular)
                         }
                         Spacer()
-                        Button {
-                            // Ação do botão
-                        } label: {
-                            Image("edit").padding(.top, 10)
+
+                        Button(action:  {
+                            ShowModal.toggle()
+                            
                         }
-                    }
-                    .frame(maxWidth: .infinity)
+                            
+                            ,label: {
+                                Image("edit").padding(.top, 10)
+                                    })
+                            
+                    }.frame(maxWidth: .infinity)
+                        .sheet(isPresented: $ShowModal) {
+                            EditProfileView()
+                        }
                     
                     Rectangle() // divisoria verde
                         .frame(maxWidth: .infinity)
@@ -95,10 +108,7 @@ struct HomeView: View {
                     }
                     
                 }
-                .overlay {
-                    Rectangle()
-                        .stroke()
-                }
+             
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 20)
                 
@@ -148,7 +158,7 @@ struct HomeView: View {
     }
 }
 
+//#Preview {
+//    HomeView()
+//}
 
-#Preview {
-    HomeView()
-}
