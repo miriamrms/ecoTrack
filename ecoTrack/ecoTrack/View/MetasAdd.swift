@@ -15,7 +15,7 @@ struct MetaPopup: View {
     var body: some View {
         VStack(spacing: 20) {
             Image(meta.tipo.icone)//systemName: "house")//meta.tipo.icone) //)
-                .resizable()
+                //.resizable()
                 .frame(width: 40, height: 40)
                 .foregroundStyle(.verdeClaro)
                 //.fill(.verdeClaro)
@@ -24,42 +24,50 @@ struct MetaPopup: View {
                 .padding(.top, 20)
 
             Text(meta.descricao)
-                .font(.headline)
+                //.font(.headline)
+                .font(.system(size: 14))
+                .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.verdeClaro)
-                .padding()
+                //.padding()
 
             Divider()
 
             HStack(spacing: 20) {
                 VStack(alignment: .leading) {
-                    Text("Média")
-                        .font(.caption)
+                    Text("Média \n")
+                        .font(.system(size: 11))
+                        .fontWeight(.regular)
                         .foregroundColor(.verdeClaro)
                     Text("Investimento Inicial")
-                        .font(.subheadline)
-                        .bold()
+                        .font(.system(size: 16))
+                        .fontWeight(.bold)
                         .foregroundColor(.verdeClaro)
                 }
                 Spacer()
-                Text("A partir de R$ \(meta.investimentoInicial, specifier: "%.2f")")
+                Text("\n A partir de R$ \(meta.investimentoInicial, specifier: "%.2f")")
                     .foregroundColor(.verdeClaro)
             }
+            .font(.system(size: 16))
+            .fontWeight(.bold)
             .padding(.horizontal)
             HStack(spacing: 20) {
                 VStack(alignment: .leading) {
-                    Text("Média")
-                        .font(.caption)
+                    Text("Média \n")
+                        .font(.system(size: 11))
+                        .fontWeight(.regular)
                         .foregroundColor(.verdeClaro)
                     Text("Economia a longo prazo")
-                        .font(.subheadline)
-                        .bold()
+                        .font(.system(size: 16))
+                        .fontWeight(.bold)
                         .foregroundColor(.verdeClaro)
                 }
                 Spacer()
-                Text("Até -\(meta.porcentagemReducao)% de gasto mensal")
+                Text("\n Até -\(meta.porcentagemReducao)% de gasto mensal")
                     .foregroundColor(.verdeClaro)
             }
+            .font(.system(size: 16))
+            .fontWeight(.bold)
             .padding(.horizontal)
 
             Spacer()
@@ -116,8 +124,7 @@ struct AddMetaSheet: View {
                     .font(.system(size: 24, weight: .bold))
                     .foregroundColor(.verdeClaro)
                 Text("Adicionar Meta")
-                    .font(.title2)
-                    .bold()
+                    .font(.system(size: 24, weight: .bold))
                     .foregroundColor(.verdeClaro)
             }
             .padding(.bottom, 20)
@@ -131,7 +138,7 @@ struct AddMetaSheet: View {
                     .padding(.trailing, 8)
                 VStack(alignment: .leading) {
                     Text("Tipo de Meta")
-                        .font(.subheadline)
+                        .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.verdeClaro)
                     //comeco
                     Menu {
@@ -165,7 +172,7 @@ struct AddMetaSheet: View {
             // Campo de Descrição
             VStack(alignment: .leading) {
                 Text("Descrição")
-                    .font(.subheadline)
+                    .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.verdeClaro)
                 TextEditor(text: $descricao) // Usando TextEditor no lugar de TextField
                     .frame(height: 100)
@@ -179,7 +186,7 @@ struct AddMetaSheet: View {
             // Campo de Investimento Inicial
             VStack(alignment: .leading) {
                 Text("Investimento Inicial")
-                    .font(.subheadline)
+                    .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.verdeClaro)
                 TextField("R$ 0,00", text: $investimentoInicial)
                     .keyboardType(.decimalPad)
@@ -194,7 +201,7 @@ struct AddMetaSheet: View {
             // Campo de Porcentagem de Redução
             VStack(alignment: .leading) {
                 Text("Porcentagem de Redução")
-                    .font(.subheadline)
+                    .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.verdeClaro)
                 TextField("0%", text: $porcentagemReducao)
                     .keyboardType(.numberPad)
@@ -233,11 +240,12 @@ struct AddMetaSheet: View {
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Voltar")
-                    .foregroundColor(.gray)
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: 35)
-                    .background(Color(UIColor.systemGray5))
+                    .background(Color(UIColor.darkLight))
                     .cornerRadius(4)
             }
         }
