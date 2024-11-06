@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @StateObject var companyViewModel: CompanyViewModel = CompanyViewModel(dataSource: .shared)
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -15,7 +18,6 @@ struct ContentView: View {
                 .foregroundStyle(.tint)
             Text("Hello, world!")
         }
-        .padding()
     }
 }
 

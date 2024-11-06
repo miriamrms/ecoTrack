@@ -8,6 +8,7 @@
 import SwiftUI
 
 
+
 enum Tab: Int {
     case home = 0
     case certificado = 1
@@ -21,7 +22,7 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             //Text("Home")
-            HomeView()
+            HomeView(companyViewModel: CompanyViewModel(dataSource: .shared))
                 .tabItem {
                     Image("home")
                     Text("Início")

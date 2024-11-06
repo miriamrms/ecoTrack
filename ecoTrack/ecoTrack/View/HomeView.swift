@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
-
+import SwiftData
 
 struct HomeView: View {
+    @StateObject var companyViewModel: CompanyViewModel = CompanyViewModel(dataSource: .shared)
     var body: some View {
         ScrollView{
             VStack(alignment: .leading){
@@ -24,12 +25,12 @@ struct HomeView: View {
                             .cornerRadius(8)
                         
                         VStack(alignment: .leading ){
-                            Text("Nome empresa")
+                            Text(companyViewModel.company!.name)
                                 .font(.system(size: 19))
                                 .foregroundStyle(.verdeClaro)
                                 .bold()
                             
-                            Text("Segmento")
+                            Text(companyViewModel.company!.companySize.rawValue)
                                 .font(.system(size: 14))
                                 .foregroundStyle(.verdeClaro)
                                 .fontWeight(.regular)
@@ -144,6 +145,6 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}

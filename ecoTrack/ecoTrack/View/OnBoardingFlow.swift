@@ -46,7 +46,7 @@ struct OnBoardingFlow: View {
 
         }
         .fullScreenCover(isPresented: $isPresented, content: {
-            HomeView()
+//            HomeView()
         })
         .padding(.bottom,40)
         .padding(.horizontal,  20)

@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SwiftData
 
-enum CompanySize: String, Identifiable, CaseIterable{
+enum CompanySize: String, Identifiable, CaseIterable, Codable {
     case micro = "Micro Empresa"
     case pequena = "Pequena Empresa"
     case media = "Média Empresa"

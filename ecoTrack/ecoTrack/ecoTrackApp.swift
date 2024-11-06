@@ -6,12 +6,22 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct ecoTrackApp: App {
+    let container: ModelContainer
     var body: some Scene {
         WindowGroup {
-            OnBoardingFlow()
+            LoginView(companyViewModel: CompanyViewModel(dataSource: .shared))
+        }
+        .modelContainer(container)
+    }
+    init() {
+        do {
+            container = try ModelContainer(for: CompanyData.self)
+        } catch {
+            fatalError("Failed to create ModelContainer for Movie.")
         }
     }
 }
