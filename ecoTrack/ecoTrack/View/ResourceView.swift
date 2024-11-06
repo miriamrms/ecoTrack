@@ -11,7 +11,12 @@ struct ResourceView: View {
     var resource: Resources
     let width = UIScreen.main.bounds.width
     let height = UIScreen.main.bounds.height
-
+    
+    @State var showGastoMensalSheet: Bool = false
+    @State var showHistorySheet: Bool = false
+    @State var quantidadeGasta: String = ""
+    @State var valorGasta: String = ""
+    
     
     var body: some View {
         ScrollView(){
@@ -62,7 +67,7 @@ struct ResourceView: View {
                             Spacer()
                             VStack{
                                 Button {
-                                    //
+                                    showHistorySheet.toggle()
                                 } label: {
                                     ZStack{
                                         HStack{
@@ -78,8 +83,12 @@ struct ResourceView: View {
                                     .background(Color.white)
                                     .cornerRadius(8)
                                 }
+                                .sheet(isPresented: $showHistorySheet) {
+                                    HistorySheetView(resource: resource)
+                                }
                                 Button {
-                                    //
+                                    showGastoMensalSheet.toggle()
+                                    
                                 } label: {
                                     ZStack{
                                         VStack{
@@ -95,7 +104,9 @@ struct ResourceView: View {
                                     .background(Color.white)
                                     .cornerRadius(8)
                                 }
-
+                                .sheet(isPresented: $showGastoMensalSheet) {
+                                    GastoMensalSheetView(resource: resource)
+                                }
                             }
                             .font(.system(size: 16, weight: .regular))
                             .frame(width: width*0.34)
@@ -123,7 +134,7 @@ struct ResourceView: View {
                     HStack{
                         Image("greenLeaf")
                         Text("Metas sustentáveis")
-        
+                        
                     }
                     .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(Color.verdeClaro)
@@ -142,8 +153,124 @@ struct ResourceView: View {
         .ignoresSafeArea()
         
     }
+    
 }
 
 #Preview {
-    ResourceView(resource: .energia)
+    ResourceView(resource: .agua)
 }
+
+struct HistorySheetView: View {
+    @Environment(\.dismiss) var dismiss
+    @State private var selectionYear = "2024"
+    @State var isShowingYearPicker = false
+    var resource: Resources
+    var body: some View {
+        VStack(spacing: 18){
+            HStack {
+                Text("Histórico de consumo")
+                Spacer()
+                Button {
+                    isShowingYearPicker.toggle()
+                } label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 6)
+                        HStack {
+                            Text(selectionYear)
+                            Image(systemName: "chevron.down")
+                        }
+                        .foregroundStyle(Color.white)
+                    }
+                    .frame(width: 100, height: 34)
+                    
+                }
+                .sheet(isPresented: $isShowingYearPicker){
+                    YearPickerView(selectionYear: $selectionYear)
+                        .presentationDetents([.fraction((0.35))])
+                }
+                
+            }
+            .foregroundStyle(resource.cor[1])
+            .font(.system(size: 19, weight: .bold))
+            .padding(.top, 28)
+            .padding(.bottom, 28)
+            
+            HStack {
+                Text("Mês")
+                Spacer()
+                Text(resource.measurement)
+                Spacer()
+                Text("Valor")
+            }
+            .foregroundStyle(resource.cor[1])
+            .font(.system(size: 20, weight: .bold))
+            
+            ScrollView(.vertical) {
+                ForEach(0..<5) { i in
+                    HStack {
+                        Text("Item \(i)")
+                            .font(.system(size: 19, weight: .bold))
+                        Spacer()
+                        Text("Item \(i)")
+                            .font(.system(size: 19, weight: .regular))
+                        Spacer()
+                        Text("Item \(i)")
+                            .font(.system(size: 19, weight: .regular))
+                    }
+                    Divider()
+                        .frame(height: 1)
+                        .overlay(.azulEscuroDark)
+                    
+                }
+                .foregroundStyle(Color.azulEscuroDark)
+            }
+            .padding(.bottom, 10)
+            
+        }
+        .presentationDetents([.medium, .large])
+        .frame(maxWidth: .infinity)
+        .padding(.leading, 20)
+        .padding(.trailing, 20)
+    }
+}
+
+struct GastoMensalSheetView: View {
+    @Environment(\.dismiss) var dismiss
+    @State var begin = Date.now
+    @State var quantidade = ""
+    @State var valor = ""
+    var resource: Resources
+    var body: some View {
+        NavigationStack {
+            Form{
+                
+                Text("Adicionar um Gasto de \(resource.rawValue)")
+                Section{
+                    TextField("Quanditade gasta em \(resource.measurement)", text: $quantidade)
+                    TextField("Valor gasto em R$", text: $valor)
+                    DatePicker("Data", selection: $begin, displayedComponents: .date)
+                }
+            }
+            .foregroundStyle(Color.verdeEscuroDark)
+            .navigationTitle("Novo Gasto | \(resource.rawValue)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading){
+                    Button("Cancelar"){
+                        dismiss()
+                    }
+                    .foregroundStyle(Color(.red))
+                }
+                ToolbarItem(placement: .topBarTrailing){
+                    Button("Criar"){
+                        
+                    }
+                    .foregroundStyle(.blue)
+                }
+            }
+        }
+        .presentationDetents([.medium, .large])
+    }
+}
+
+
