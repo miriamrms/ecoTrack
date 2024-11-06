@@ -10,24 +10,26 @@ import SwiftData
 
 class CompanyViewModel: ObservableObject{
     
-    @Published var company: CompanyData?
-//    @Published var companyTeste: [CompanyData]
+    @Published var company: CompanyData
     
-    private let dataSource: SwiftDataService
+    private let dataSource = SwiftDataService.shared
     
     
     init(dataSource: SwiftDataService) {
-        self.dataSource = dataSource
-        self.company = dataSource.fetchCompany().first
-//        company = (dataSource.fetchCompany()).first
-//        companyTeste = dataSource.fetchCompany()
+       self.company = CompanyData(name: "", companySize: .micro) // Inicialização padrão
+       if let savedCompany = dataSource.fetchCompany().first, company.name.isEmpty {
+           self.company = savedCompany
+       }
     }
     
     func addCompany(name: String, companySize: CompanySize) {
-        let companyToSave = CompanyData(name: name, companySize: companySize)
-        dataSource.addCompany(companyToSave)
-        company = dataSource.fetchCompany().first
-    }
+        if company.name.isEmpty {
+         let companyToSave = CompanyData(name: name, companySize: companySize)
+         dataSource.addCompany(companyToSave)
+         company = companyToSave
+        }
+     }
+ 
     
     func editCompany(name: String, companySize: CompanySize) {
         
@@ -51,4 +53,3 @@ class CompanyViewModel: ObservableObject{
 //    }
 
 }
-

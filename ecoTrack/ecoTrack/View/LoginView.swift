@@ -15,7 +15,7 @@ struct LoginView: View {
     @State var isButtonActive: Bool = false
     @State var isShowingAlert: Bool = true
     @State var showHomePage: Bool = false
-    @StateObject var companyViewModel: CompanyViewModel = CompanyViewModel(dataSource: .shared)
+    @EnvironmentObject var companyViewModel: CompanyViewModel
     
     var body: some View {
         ZStack(alignment: .top){
@@ -75,7 +75,7 @@ struct LoginView: View {
                         isButtonActive.toggle()
                     }
                     .fullScreenCover(isPresented: $showHomePage, content: {
-                        HomeView(companyViewModel: companyViewModel)
+                        HomeView()
                     })
                     
                 }

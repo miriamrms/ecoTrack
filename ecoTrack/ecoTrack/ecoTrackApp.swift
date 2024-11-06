@@ -11,9 +11,12 @@ import SwiftData
 @main
 struct ecoTrackApp: App {
     let container: ModelContainer
+    @StateObject private var companyViewModel = CompanyViewModel(dataSource: .shared)
+    
     var body: some Scene {
         WindowGroup {
-            LoginView(companyViewModel: CompanyViewModel(dataSource: .shared))
+            LoginView()
+                .environmentObject(companyViewModel)
         }
         .modelContainer(container)
     }

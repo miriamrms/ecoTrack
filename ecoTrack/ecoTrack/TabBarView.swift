@@ -22,7 +22,7 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             //Text("Home")
-            HomeView(companyViewModel: CompanyViewModel(dataSource: .shared))
+            HomeView()
                 .tabItem {
                     Image("home")
                     Text("Início")
