@@ -20,13 +20,15 @@ struct OnBoarding1: View {
                     .ignoresSafeArea()
                 
                 VStack(alignment: .center, spacing: 20){
-                    
+
                     Spacer()
+                  
                     Spacer()
                     
                     Image("recicle")
+
                         .frame(maxWidth: .infinity, alignment:.topTrailing )
-//                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
+
                     
                     Spacer()
                     
@@ -34,12 +36,12 @@ struct OnBoarding1: View {
                                 .font(.system(size: 44))
                                 .foregroundStyle(.verdeClaro)
                                 .bold()
-                    
+
                     Text("Gerencie sua empresa rumo a \n sustentabilidade")
                                 .font(.system(size: 16))
                                 .foregroundStyle(.verdeClaro)
                                 .multilineTextAlignment(.center)
-                  
+
                     Spacer()
                         .frame(maxHeight: .infinity)
                     

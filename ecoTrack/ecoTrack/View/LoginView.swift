@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct LoginView: View {
-    @State private var companyName: String = ""
+    @State var companyName: String = ""
     @State var companySize: CompanySize?
+    @State var saveCompanySize: CompanySize = .micro
     @State var isButtonActive: Bool = false
     @State var isShowingAlert: Bool = true
+    @State var showHomePage: Bool = false
+    @EnvironmentObject var companyViewModel: CompanyViewModel
+    
     var body: some View {
         ZStack(alignment: .top){
             ScrollView {
@@ -53,7 +58,12 @@ struct LoginView: View {
                             }
                         }
                         .accentColor(.verdeClaro)
-                        LoginButton(isButtonValid: $isButtonActive)
+                        LoginButton(
+                            isButtonValid: $isButtonActive,
+                            name: $companyName,
+                            companySize: $saveCompanySize,
+                            showHomePage: $showHomePage
+                        )
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
@@ -61,8 +71,12 @@ struct LoginView: View {
                     .padding(15)
                     .padding(.top, 28)
                     .onChange(of: ((companyName != "") && ((companySize) != nil))) { newValue in
+                        saveCompanySize = companySize!
                         isButtonActive.toggle()
                     }
+                    .fullScreenCover(isPresented: $showHomePage, content: {
+                        HomeView()
+                    })
                     
                 }
                 
@@ -73,9 +87,9 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView()
-}
+//#Preview {
+//        LoginView()
+//}
 
 struct customViewModifier: ViewModifier {
     func body(content: Content) -> some View {
