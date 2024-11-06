@@ -11,7 +11,8 @@ import SwiftUI
 struct ecoTrackApp: App {
     var body: some Scene {
         WindowGroup {
-            OnBoardingFlow()
+            ContentView()
+            //.environmentObject(MetasViewModel)
         }
     }
 }

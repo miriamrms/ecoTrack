@@ -14,10 +14,13 @@ struct MetaPopup: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Image(meta.tipo.icone)
+            Image(meta.tipo.icone)//systemName: "house")//meta.tipo.icone) //)
                 .resizable()
                 .frame(width: 40, height: 40)
-                .foregroundColor(.verdeClaro)
+                .foregroundStyle(.verdeClaro)
+                //.fill(.verdeClaro)
+                //.tint(.verdeClaro)
+                .foregroundColor(.verdeClaro) //(.black)
                 .padding(.top, 20)
 
             Text(meta.descricao)
@@ -90,7 +93,7 @@ struct MetaPopup: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(Color.white)
+       // .background(Color.blue)
         .cornerRadius(4)
         .shadow(radius: 10)
         .padding()
@@ -142,17 +145,17 @@ struct AddMetaSheet: View {
                     } label: {
                         HStack {
                             Text(tipoSelecionado.rawValue.capitalized)
-                                .foregroundColor(.primary) // Controla a cor do texto
+                                .foregroundColor(.primary)
                             Spacer()
-                            Image(systemName: "chevron.down") // Seta para baixo
-                                .foregroundColor(.gray) // Cor da seta
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
                         }
                         .padding()
-                        .background(Color.white) // Define o fundo branco
-                        .cornerRadius(4) // Bordas arredondadas
+                        .background(Color.white)
+                        .cornerRadius(4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
-                                .stroke(Color.verdeClaro, lineWidth: 1) // Borda verde
+                                .stroke(Color.verdeClaro, lineWidth: 1)
                         )
                     }
                 }
@@ -165,8 +168,8 @@ struct AddMetaSheet: View {
                     .font(.subheadline)
                     .foregroundColor(.verdeClaro)
                 TextEditor(text: $descricao) // Usando TextEditor no lugar de TextField
-                    .frame(height: 100) // Defina a altura que deseja
-                    .padding(.horizontal, 10) // Espaçamento interno para o texto
+                    .frame(height: 100)
+                    .padding(.horizontal, 10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.verdeClaro, lineWidth: 1) // Borda personalizada
@@ -240,6 +243,7 @@ struct AddMetaSheet: View {
         }
         .padding()
         .background(Color(UIColor.systemBackground))
+        //.background(Color(UIColor.blue))//(Color(UIColor.systemBackground))
         .cornerRadius(4)
         .shadow(radius: 10)
     }

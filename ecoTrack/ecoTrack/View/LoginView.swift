@@ -10,20 +10,20 @@ import SwiftUI
 struct LoginView: View {
     @State private var companyName: String = ""
     @State var companySize: CompanySize?
-    @State var isButtonActive: Bool = false
-    @State var isShowingAlert: Bool = true
+    @Binding var hasCompletedLogin: Bool
+
     var body: some View {
         ZStack(alignment: .top){
             ScrollView {
-                VStack{
-                    //MARK: Header
-                    VStack(spacing: 20){
+                VStack {
+                    // MARK: Header
+                    VStack(spacing: 20) {
                         Image("smallLeaf")
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: .infinity, alignment: .trailing)
                         
-                        VStack(alignment: .leading, spacing: 10){
+                        VStack(alignment: .leading, spacing: 10) {
                             Text("Nos conte mais sobre sua empresa")
                                 .font(.system(size: 33, weight: .bold))
                             Text("Complete o cadastro com as informações da sua empresa")
@@ -35,46 +35,59 @@ struct LoginView: View {
                     .frame(height: 480)
                     .background(Color("verdeClaro"))
                     .ignoresSafeArea()
-                    //MARK: TextFields
-                    VStack(alignment: .leading, spacing: 27){
-                        VStack(alignment: .leading){
+                    
+                    // MARK: TextFields
+                    VStack(alignment: .leading, spacing: 27) {
+                        VStack(alignment: .leading) {
                             Text("Nome da Empresa")
                                 .font(.system(size: 16, weight: .bold))
-                            TextField("Nome da sua Empresa",
-                                      text: $companyName)
-                            .modifier(customViewModifier())
+                            TextField("Nome da sua Empresa", text: $companyName)
+                                .modifier(customViewModifier())
                         }
-                        HStack{
+                        
+                        HStack {
                             Image(companySize == nil ? "portePequeno" : companySize!.icon)
-                            VStack(alignment: .leading){
+                            VStack(alignment: .leading) {
                                 Text("Porte da Empresa")
                                     .font(.system(size: 16, weight: .bold))
                                 DropDownView(selectedCompanySize: $companySize)
                             }
                         }
                         .accentColor(.verdeClaro)
-                        LoginButton(isButtonValid: $isButtonActive)
+                        
+                        // Botão Continuar com personalização anterior
+                        Button(action: {
+                            completeLogin()
+                        }) {
+                            Text("Continuar")
+                                .font(.system(size: 16, weight: .bold))
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color("verdeClaro"))
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .foregroundStyle(Color("verdeClaro"))
                     .padding(15)
                     .padding(.top, 28)
-                    .onChange(of: ((companyName != "") && ((companySize) != nil))) { newValue in
-                        isButtonActive.toggle()
-                    }
-                    
                 }
-                
             }
             .ignoresSafeArea()
-            
         }
+    }
+    
+    // Função para marcar login como concluído
+    private func completeLogin() {
+        UserDefaults.standard.set(true, forKey: "hasCompletedLogin")
+        hasCompletedLogin = true
     }
 }
 
 #Preview {
-    LoginView()
+    LoginView(hasCompletedLogin: .constant(false))
 }
 
 struct customViewModifier: ViewModifier {
