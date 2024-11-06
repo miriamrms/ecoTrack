@@ -17,7 +17,7 @@ struct ecoTrackApp: App {
         WindowGroup {
             //ContentView()
             //.environmentObject(MetasViewModel)
-            LoginView()
+            LoginView(hasCompletedLogin: .constant(false))
                 .environmentObject(companyViewModel)
         }
         .modelContainer(container)
