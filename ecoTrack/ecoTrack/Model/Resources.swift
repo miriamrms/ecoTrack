@@ -77,6 +77,17 @@ enum Resources: String, CaseIterable{
             return "mediaWaste"
         }
     }
+    
+    var measurement: String {
+        switch self {
+        case .agua:
+            return "L"
+        case .energia:
+            return "kWh"
+        case .residuos:
+            return "Kg"
+        }
+    }
 }
 
 enum Analysis: String, CaseIterable{
