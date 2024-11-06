@@ -15,6 +15,8 @@ struct ecoTrackApp: App {
     
     var body: some Scene {
         WindowGroup {
+            //ContentView()
+            //.environmentObject(MetasViewModel)
             LoginView()
                 .environmentObject(companyViewModel)
         }

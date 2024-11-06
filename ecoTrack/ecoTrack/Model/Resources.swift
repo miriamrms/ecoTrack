@@ -11,7 +11,7 @@ enum Resources: String, CaseIterable{
     case agua = "Água"
     case energia = "Energia"
     case residuos = "Resíduos"
-    
+        
     var icone: String {
         switch self {
         case .agua:

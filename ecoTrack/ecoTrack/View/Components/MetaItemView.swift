@@ -14,12 +14,13 @@ struct MetaItemView: View {
     var body: some View {
         HStack {
             Image(meta.tipo.icone)
-                .font(.title2)
+//  `78                .font(.title2) //????
                 .foregroundColor(.white)
 //                .foregroundColor(meta.concluida ? .gray : .white)
 
             Text(meta.descricao)
-                .font(.body)
+                //.font(.body) //Aqui não
+                .font(.system(size: 14, weight: .bold)) // AQUI MESMOOOO!!!
                 .foregroundColor(.white)
 //                .foregroundColor(meta.concluida ? .gray : .white)
 

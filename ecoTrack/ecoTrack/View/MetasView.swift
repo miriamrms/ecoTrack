@@ -56,8 +56,8 @@ struct MetasView: View {
                 HStack {
                     Image("metasLogo")
                     Text("Metas")
-                        .font(.largeTitle)
-                        .bold()
+                        .font(.system(size: 28))
+                        .fontWeight(.bold)
                         .foregroundColor(.verdeClaro)
                     Spacer()
                     Button(action: { viewModel.showAddMetaSheet.toggle() }) {
@@ -77,7 +77,8 @@ struct MetasView: View {
                     .frame(height: 1)
                     .foregroundStyle(.verdeClaro)
                 List {
-                    Section(header: Text("Metas")) {
+                    Section(header: Text("Metas").font(.system(size: 14))
+                        .fontWeight(.bold).foregroundColor(.azulEscuro)) {
                         ForEach(viewModel.metas.filter { !$0.concluida }) { meta in
                             MetaItemView(meta: meta) {
                                 viewModel.toggleConcluida(for: meta)
@@ -88,7 +89,8 @@ struct MetasView: View {
                         }
                     }
 
-                    Section(header: Text("Metas Concluídas")) {
+                    Section(header: Text("Metas Concluídas").font(.system(size: 14))
+                        .fontWeight(.bold).foregroundColor(.azulEscuro)) {
                         ForEach(viewModel.metas.filter { $0.concluida }) { meta in
                             MetaItemView(meta: meta) {
                                 viewModel.toggleConcluida(for: meta)
