@@ -8,8 +8,38 @@
 import SwiftUI
 import SwiftData
 
+enum Recurso: String, CaseIterable{
+    case agua = "Água"
+    case energia = "Energia"
+    case residuos = "Resíduos"
+    
+    var icone: String {
+        switch self {
+        case .agua:
+            return "waterIcon"
+        case .energia:
+            return "energyIcon"
+        case .residuos:
+            return "wasteIcon"
+        }
+    }
+    
+    var cor: [Color] {
+        switch self {
+        case .agua:
+            return [.azulAguaLight, .azulAgua]
+        case .energia:
+            return [.amareloEnergiaLight, .amareloEnergia]
+        case .residuos:
+            return [.laranjaResiLight, .laranjaResi]
+        }
+    }
+}
+
 struct HomeView: View {
+  
     @EnvironmentObject var companyViewModel: CompanyViewModel
+    @State var ShowModal = false
     
     var body: some View {
         ScrollView{
@@ -37,21 +67,19 @@ struct HomeView: View {
                                 .fontWeight(.regular)
                         }
                         Spacer()
-                        Button {}
+                        Button(action:  {
+                            ShowModal.toggle()
                             
-                            label: {
+                        }
+                            
+                            ,label: {
                                 Image("edit").padding(.top, 10)
-                                    }
-                       
-                            
-                       
+                                    })
                             
                     }.frame(maxWidth: .infinity)
-                    
-//                    .overlay {
-//                                            Rectangle()
-//                                                .stroke()
-//                                        }
+                        .sheet(isPresented: $ShowModal) {
+                            EditProfileView()
+                        }
                     
                     Rectangle()//divisoria verde
                         .frame(maxWidth: .infinity)
@@ -83,10 +111,7 @@ struct HomeView: View {
                     }
                     
                 }
-                .overlay {
-                    Rectangle()
-                        .stroke()
-                }
+             
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 20)
               

@@ -14,42 +14,49 @@ struct OnBoardingFlow: View {
     var body: some View {
         
         
-        TabView(selection: $currentTab) {
-            OnBoarding1().tag(0)
-            OnBoarding2().tag(1)
-            OnBoarding3().tag(2)
-        }
-        .ignoresSafeArea(edges: .top)
-        .tabViewStyle(.page(indexDisplayMode: .always))
-        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-        
-        HStack {
+        VStack {
             
-            Button {
-                isPresented.toggle()
-            } label: {
-                SkipButtonView()
+            TabView(selection: $currentTab) {
+                OnBoarding1().tag(0)
+                OnBoarding2().tag(1)
+                OnBoarding3().tag(2)
             }
-
-            Spacer()
-           
-            Button {
-              
-                if currentTab == 2 {
+            
+            .ignoresSafeArea(edges: .top)
+            .tabViewStyle(.page(indexDisplayMode: .always))
+            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+            
+            HStack {
+                
+                Button {
                     isPresented.toggle()
-                } else {
-                    currentTab = currentTab + 1
+                } label: {
+                    SkipButtonView()
                 }
-            } label: {
-                NextButtonView()
+                
+                Spacer()
+                
+                Button {
+                    
+                    if currentTab == 2 {
+                        isPresented.toggle()
+                    } else {
+                        currentTab = currentTab + 1
+                    }
+                } label: {
+                    NextButtonView()
+                    
+                }
+                
             }
-
+            .fullScreenCover(isPresented: $isPresented, content: {
+               // HomeView() 
+              //adicionar homeView novamente
+            })
+//            .padding(.bottom,40)
+            .padding(.horizontal,  20)
         }
-        .fullScreenCover(isPresented: $isPresented, content: {
-//            HomeView()
-        })
-        .padding(.bottom,40)
-        .padding(.horizontal,  20)
+
     }
     
     

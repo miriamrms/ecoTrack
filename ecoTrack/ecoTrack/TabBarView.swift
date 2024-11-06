@@ -16,13 +16,19 @@ enum Tab: Int {
 }
 
 struct TabBarView: View {
-       
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(Color(.white))
+        
+    }
     @State var selectedTab: Tab = Tab.home
     
     var body: some View {
         TabView {
             //Text("Home")
-            HomeView()
+            VStack {
+                HomeView()
+//                HomeView()
+            }
                 .tabItem {
                     Image("home")
                     Text("Início")
@@ -35,15 +41,22 @@ struct TabBarView: View {
                     Text("Certificado")
                 }
             
-            Text("Metas")
+            MetasView()
                 .tabItem {
                     Image("metas")
                     Text("Metas")
                 }
         }
+        .tabViewStyle(.tabBarOnly)
         .tint(.verdeClaro)
+        .toolbarBackground(Color.red, for: .tabBar)
+        .toolbarBackgroundVisibility(.visible, for: .tabBar)
+//        .onAppear() {
+//                                UITabBar.appearance().barTintColor = .red
+//                                   }
     }
 }
+
 
 #Preview {
     TabBarView()
