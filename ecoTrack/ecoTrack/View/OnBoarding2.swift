@@ -13,17 +13,19 @@ struct OnBoarding2: View {
         NavigationStack {
             
             ZStack{
-                Image("backGreen")
+                Image("backgroundOnBoarding")
                     .resizable()
                     .ignoresSafeArea()
                 
                 
                 VStack(alignment: .center, spacing: 20){
                     Spacer()
-                    Spacer()
-                    
+                  
                     
                     Image("threeIcons")
+                        .padding(.top)
+                        .padding(.top)
+                        //.padding(.bottom)
                     
                     Text("Acompanhe seus recursos")
                         .font(.system(size: 28))
@@ -36,26 +38,6 @@ struct OnBoarding2: View {
                         .lineLimit(2)
                     
                     Spacer()
-                    
-                    
-                    
-//                    HStack{
-//                        NavigationLink(destination: HomeView()) {
-//                            SkipButtonView()
-//                        }
-//                        
-//                        Spacer()
-//                        NavigationLink(destination: OnBoarding3()) {
-//                            NextButtonView()
-//                            
-//                        }
-//                    }
-//                    
-//                    .padding(.bottom,40)
-//                    .padding(.horizontal,  20)
-//                    
-                    
-                    
                 }
             }
         }
