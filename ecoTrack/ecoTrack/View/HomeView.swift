@@ -49,12 +49,11 @@ struct HomeView: View {
                     Spacer().frame(maxHeight: 20)
                     
                     HStack {
-                        Rectangle()
-                            .foregroundStyle(.verdeClaro)
-                            .frame(width: 45, height: 45)
-                            .cornerRadius(8)
-                        
 
+                        Image(companyViewModel.company.companySize.icon)
+                            .resizable()
+                            .frame(width: 45, height: 45)
+                        
                         VStack(alignment: .leading ){
                             Text(companyViewModel.company.name)
                                 .font(.system(size: 19))
@@ -98,7 +97,7 @@ struct HomeView: View {
                         Spacer().frame(height: 10)
                         
                         ForEach(Resources.allCases, id: \.self) { recurso in
-                            NavigationLink(destination: ResourceView(resource: recurso)) {
+                            NavigationLink(destination: ResourceView(resourceType: recurso)) {
                                 ButtonView(recurso: recurso)
                                     .frame(maxWidth: .infinity)
                             }

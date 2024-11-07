@@ -36,6 +36,14 @@ class CompanyViewModel: ObservableObject{
         
     }
     
+    func addFixedResources(){
+        let dummyResources = ResourceData.dummyResources
+        for resource in dummyResources {
+            dataSource.addResource(resource)
+        }
+        
+    }
+    
 //    func deleteCompany(_ company: CompanyData) {
 //        modelContext.delete(company)
 //        fetchData()

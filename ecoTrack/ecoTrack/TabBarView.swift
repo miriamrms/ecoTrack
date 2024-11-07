@@ -14,6 +14,7 @@ enum Tab: Int {
 }
 
 struct TabBarView: View {
+    @StateObject private var companyViewModel = CompanyViewModel(dataSource: .shared)
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Color(.white))
     }
@@ -23,6 +24,7 @@ struct TabBarView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             HomeView()
+                .environmentObject(companyViewModel)
                 .tabItem {
                     Image("home")
                     Text("Início")
