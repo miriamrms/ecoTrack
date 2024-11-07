@@ -53,7 +53,7 @@ struct ResourceView: View {
                                     .overlay(Color.white)
                                 HStack{
                                     Image("ruler")
-                                    Text("1652 L")
+                                    Text("1652 \(resource.measurement)")
                                 }
                                 .font(.system(size: 23, weight: .bold))
                                 HStack{

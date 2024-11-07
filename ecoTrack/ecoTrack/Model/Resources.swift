@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-enum Resources: String, CaseIterable{
+enum Resources: String, CaseIterable, Codable{
     case agua = "Água"
     case energia = "Energia"
     case residuos = "Resíduos"

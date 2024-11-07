@@ -37,4 +37,21 @@ class SwiftDataService {
             fatalError(error.localizedDescription)
         }
     }
+    
+    func fetchResources() -> [ResourceData] {
+        do {
+            return try modelContext.fetch(FetchDescriptor<ResourceData>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addResource(_ resource: ResourceData) {
+        modelContext.insert(resource)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
 }

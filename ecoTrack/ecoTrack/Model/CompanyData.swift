@@ -18,36 +18,7 @@ class CompanyData: Identifiable {
         self.companySize = companySize
     }
 }
-@Model
-class ResourceData: Identifiable {
-    var id: String
-    var name: String
-    var history: [SpendData]
-    var spendMedia: Double
-    var mesureUnit: String
-    
-    init(name: String, history: [SpendData], spendMedia: Double, mesureUnit: String) {
-        id = UUID().uuidString
-        self.name = name
-        self.history = history
-        self.spendMedia = spendMedia
-        self.mesureUnit = mesureUnit
-    }
-}
-@Model
-class SpendData: Identifiable {
-    var id: String
-    var data: Date
-    var price: Double
-    var amount: Double
-    
-    init(data: Date, price: Double, amount: Double) {
-        id = UUID().uuidString
-        self.data = data
-        self.price = price
-        self.amount = amount
-    }
-}
+
 
 
 
