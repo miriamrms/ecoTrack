@@ -19,7 +19,6 @@ struct LoginButton: View {
     var body: some View {
         Button {
             if isButtonValid {
-                
                 companyViewModel.addCompany(name: name, companySize: companySize)
                 showHomePage.toggle()
             }

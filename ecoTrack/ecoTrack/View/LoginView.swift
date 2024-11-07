@@ -61,19 +61,6 @@ struct LoginView: View {
                         }
                         .accentColor(.verdeClaro)
                         
-                        // Botão Continuar com personalização anterior
-//                         Button(action: {
-//                             completeLogin()
-//                         }) {
-//                             Text("Continuar")
-//                                 .font(.system(size: 16, weight: .bold))
-//                                 .frame(maxWidth: .infinity)
-//                                 .padding()
-//                                 .background(Color("verdeClaro"))
-//                                 .foregroundColor(.white)
-//                                 .cornerRadius(8)
-//                         }
-
                         LoginButton(
                             isButtonValid: $isButtonActive,
                             name: $companyName,
@@ -90,9 +77,13 @@ struct LoginView: View {
                         saveCompanySize = companySize!
                         isButtonActive.toggle()
                     }
-                    .fullScreenCover(isPresented: $showHomePage, content: {
-                        HomeView()
-                    })
+                    .onChange(of: showHomePage) { newValue in
+                        UserDefaults.standard.set(true, forKey: "hasCompletedLogin")
+                        hasCompletedLogin = true
+                    }
+                    //                    .fullScreenCover(isPresented: $showHomePage, content: {
+                    //                        HomeView()
+                    //                    })
                 }
             }
             .ignoresSafeArea()
@@ -100,10 +91,10 @@ struct LoginView: View {
     }
     
     // Função para marcar login como concluído
-    private func completeLogin() {
-        UserDefaults.standard.set(true, forKey: "hasCompletedLogin")
-        hasCompletedLogin = true
-    }
+    //    private func completeLogin() {
+    //        UserDefaults.standard.set(true, forKey: "hasCompletedLogin")
+    //        hasCompletedLogin = true
+    //    }
 }
 
 // #Preview {
