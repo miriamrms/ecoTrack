@@ -21,8 +21,8 @@ enum Certificate: String, CaseIterable {
     }
 }
 
+struct CertificateView: View {
 
-struct SwiftUIView: View {
     var body: some View {
         
         
@@ -133,5 +133,5 @@ struct SwiftUIView: View {
 }
 
 #Preview {
-    SwiftUIView()
+    CertificateView()
 }

@@ -11,7 +11,10 @@ class MetasViewModel: ObservableObject {
     @Published var metas: [Meta] = [
         Meta(tipo: .agua, descricao: "Reduzir consumo de água", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
         Meta(tipo: .energia, descricao: "Economizar energia", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
-        Meta(tipo: .residuos, descricao: "Reduzir resíduos", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: true)
+        Meta(tipo: .energia, descricao: "Usar equipamentos que economizam energia", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
+        Meta(tipo: .agua, descricao: "Instalar torneiras automaticas", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
+        Meta(tipo: .residuos, descricao: "Reduzir resíduos", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: true),
+        Meta(tipo: .residuos, descricao: "Reciclar residuos", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false)
     ]
     
     @Published var showAddMetaSheet = false
@@ -32,9 +35,3 @@ class MetasViewModel: ObservableObject {
         metas.append(novaMeta)
     }
 }
-
-
-//func adicionarMeta(tipo: TipoMeta, descricao: String, investimentoInicial: Double, porcentagemReducao: Int) {
-//       let novaMeta = Meta(tipo: tipo, descricao: descricao, investimentoInicial: investimentoInicial, porcentagemReducao: porcentagemReducao)
-//       metas.append(novaMeta)
-//   }

@@ -7,11 +7,11 @@
 import Foundation
 import SwiftUI
 
-enum Resources: String, CaseIterable{
+enum Resources: String, CaseIterable, Codable{
     case agua = "Água"
     case energia = "Energia"
     case residuos = "Resíduos"
-    
+        
     var icone: String {
         switch self {
         case .agua:
@@ -75,6 +75,17 @@ enum Resources: String, CaseIterable{
             return "mediaEnergy"
         case .residuos:
             return "mediaWaste"
+        }
+    }
+    
+    var measurement: String {
+        switch self {
+        case .agua:
+            return "L"
+        case .energia:
+            return "kWh"
+        case .residuos:
+            return "Kg"
         }
     }
 }

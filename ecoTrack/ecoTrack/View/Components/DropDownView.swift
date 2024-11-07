@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct DropDownView: View{
+struct DropDownView: View {
     @Binding var selectedCompanySize: CompanySize?
     @State var dropdownLabel: String = "Porte da sua Empresa"
     

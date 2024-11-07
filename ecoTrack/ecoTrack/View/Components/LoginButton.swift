@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct LoginButton: View {
+    @EnvironmentObject var companyViewModel: CompanyViewModel
     @Binding var isButtonValid: Bool
+    @Binding var name: String
+    @Binding var companySize: CompanySize
+    @Binding var showHomePage: Bool
     @State var isShowingAlert: Bool = false
+    
     var body: some View {
         Button {
             if isButtonValid {
-    
+                companyViewModel.addCompany(name: name, companySize: companySize)
+                showHomePage.toggle()
             }
             else{
                 isShowingAlert = true
@@ -38,6 +45,5 @@ struct LoginButton: View {
 }
 
 #Preview {
-    LoginButton(isButtonValid: .constant(true))
+//    LoginButton(isButtonValid: .constant(true))
 }
-
