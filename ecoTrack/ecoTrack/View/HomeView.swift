@@ -100,7 +100,8 @@ struct HomeView: View {
                             .frame(height: 10)
                         
                         ForEach(Resources.allCases, id: \.self){ recurso in
-                            ButtonView(recurso: recurso).frame(maxWidth: .infinity)
+                            ButtonView(recurso: recurso)
+                                .frame(maxWidth: .infinity)
                         }
                         
                         
@@ -131,7 +132,8 @@ struct HomeView: View {
                     Spacer()
                         .frame(height: 10)
                     
-//                    ButtonView().frame(maxWidth: .infinity)
+                    CertificateCardView()
+                        .frame(maxWidth: .infinity)
                     
                     Spacer()
                         .frame(height: 10)
@@ -148,7 +150,7 @@ struct HomeView: View {
                     Spacer()
                         .frame(height: 10)
                     
-                    Text("Certificados concluídos")
+                    Text("Dicas sustentáveis")
                         .font(.system(size: 14))
                         .foregroundStyle(.azulEscuro)
                         .bold()
@@ -156,9 +158,7 @@ struct HomeView: View {
                     Spacer()
                         .frame(height: 10)
                     
-//                    ButtonView().frame(maxWidth: .infinity)
-//                    ButtonView().frame(maxWidth: .infinity)
-//                    ButtonView().frame(maxWidth: .infinity)
+                    DicasButtonView().frame(maxWidth: .infinity)
                     
                 } .padding(.horizontal, 20)
                 

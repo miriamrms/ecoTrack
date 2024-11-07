@@ -15,7 +15,7 @@ struct ButtonView: View {
     
     var body: some View {
        
-        Button {} //botao de recursos preenchido
+        Button {} //botao de recursos
         
         label: {
             ZStack(alignment: .top){
