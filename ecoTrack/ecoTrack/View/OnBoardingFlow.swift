@@ -37,42 +37,10 @@ struct OnBoardingFlow: View {
                 } else {
                     currentTab = currentTab + 1
 
-        
-//Estava na main
-//         VStack {
-            
-//             TabView(selection: $currentTab) {
-//                 OnBoarding1().tag(0)
-//                 OnBoarding2().tag(1)
-//                 OnBoarding3().tag(2)
-//             }
-            
-//             .ignoresSafeArea(edges: .top)
-//             .tabViewStyle(.page(indexDisplayMode: .always))
-//             .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-            
-//             HStack {
-                
-//                 Button {
-//                     isPresented.toggle()
-//                 } label: {
-//                     SkipButtonView()
-//                 }
-                
-//                 Spacer()
-                
-//                 Button {
-                    
-//                     if currentTab == 2 {
-//                         isPresented.toggle()
-//                     } else {
-//                         currentTab = currentTab + 1
-//                     }
-//                 } label: {
-//                     NextButtonView()
-                    
                 }
-                
+            }
+            label: {
+                NextButtonView()
             }
         }
         .padding(.bottom, 40)

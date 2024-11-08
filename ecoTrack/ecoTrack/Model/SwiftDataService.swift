@@ -17,7 +17,7 @@ class SwiftDataService {
     @MainActor
     private init() {
         // Change isStoredInMemoryOnly to false if you would like to see the data persistance after kill/exit the app
-        self.modelContainer = try! ModelContainer(for: CompanyData.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
+        self.modelContainer = try! ModelContainer(for: ResourceData.self, CompanyData.self, SpendData.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
         self.modelContext = modelContainer.mainContext
     }
     
@@ -31,6 +31,32 @@ class SwiftDataService {
     
     func addCompany(_ company: CompanyData) {
         modelContext.insert(company)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func fetchResources() -> [ResourceData] {
+        do {
+            return try modelContext.fetch(FetchDescriptor<ResourceData>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addResource(_ resource: ResourceData) {
+        modelContext.insert(resource)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addSpendToResource(_ resource: ResourceData, _ spend: SpendData) {
+        resource.history.append(spend)
         do {
             try modelContext.save()
         } catch {

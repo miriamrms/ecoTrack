@@ -7,7 +7,22 @@
 
 import SwiftUI
 
+enum Certificate: String, CaseIterable {
+    case iso = "ISO 1401 "
+    case seloverde = "Selo Verde"
+
+    
+    var description: String {
+        switch self {
+        case .iso: 
+            return "Gestão ambielntal eficaz para empresas sustentáveis"
+        case .seloverde: return "Reconhecimento por práticas empresariais sustentáveis"
+        }
+    }
+}
+
 struct CertificateView: View {
+
     var body: some View {
         
         
@@ -103,17 +118,16 @@ struct CertificateView: View {
                     .padding(.leading, 20)
             .padding(.top, 20)
             
-            CertificateButtonView()
-//                .padding(.top, 10)
-            
-            CertificateButtonView()
-                
-            
+            ForEach(Certificate.allCases, id: \.self){
+                certificate in CertificateButtonView(certificate: certificate)
+                    .frame(maxWidth: .infinity)
+                    
+            }
+        
             Spacer()
         }
         
         .ignoresSafeArea()
-        
         
     }
 }

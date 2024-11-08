@@ -36,6 +36,7 @@ struct ContentView: View {
                     TabBarView() // Navega para a TabBarView se o onboarding e o login já foram concluídos
                 } else {
                     LoginView(hasCompletedLogin: $hasCompletedLogin)
+                        .environmentObject(companyViewModel)
                 }
             } else {
                 OnBoardingFlow(hasCompletedOnboarding: $hasCompletedOnboarding)

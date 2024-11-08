@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Foundation
+import SwiftData
 
 struct ResourceView: View {
-    var resource: Resources
+    var resourceType: Resources
     let width = UIScreen.main.bounds.width
     let height = UIScreen.main.bounds.height
     
@@ -17,24 +19,25 @@ struct ResourceView: View {
     @State var quantidadeGasta: String = ""
     @State var valorGasta: String = ""
     
+    @StateObject var resourceViewModel: ResourceViewModel = ResourceViewModel(dataSource: .shared)
     
     var body: some View {
         ScrollView(){
             VStack(spacing: 40){
                 ZStack{
-                    resource.cor[1] //Cor do Recurso
-                    Image(resource.bgImage)
+                    resourceType.cor[1] //Cor do Recurso
+                    Image(resourceType.bgImage)
                         .resizable()
                         .scaledToFill()
                         .frame(maxWidth: width)
                     
                     VStack(){
                         HStack{
-                            Image(resource.singleIcon)
+                            Image(resourceType.singleIcon)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(maxHeight: 27)
-                            Text(resource.rawValue)
+                            Text(resourceType.rawValue)
                         }
                         .padding(.top, height * 0.08)
                         .font(.system(size: 19, weight: .bold))
@@ -53,7 +56,7 @@ struct ResourceView: View {
                                     .overlay(Color.white)
                                 HStack{
                                     Image("ruler")
-                                    Text("1652 L")
+                                    Text("1652 \(resourceType.measurement)")
                                 }
                                 .font(.system(size: 23, weight: .bold))
                                 HStack{
@@ -75,7 +78,7 @@ struct ResourceView: View {
                                                 .font(.system(size: 18, weight: .bold))
                                             Text("Histórico")
                                         }
-                                        .foregroundColor(resource.cor[1])
+                                        .foregroundColor(resourceType.cor[1])
                                         .padding(.top, 14)
                                         .padding(.bottom, 14)
                                     }
@@ -84,7 +87,8 @@ struct ResourceView: View {
                                     .cornerRadius(8)
                                 }
                                 .sheet(isPresented: $showHistorySheet) {
-                                    HistorySheetView(resource: resource)
+                                    HistorySheetView(resourceType: resourceType)
+                                        .environmentObject(resourceViewModel)
                                 }
                                 Button {
                                     showGastoMensalSheet.toggle()
@@ -96,7 +100,7 @@ struct ResourceView: View {
                                                 .font(.system(size: 18, weight: .bold))
                                             Text("Adicionar Gasto Mensal")
                                         }
-                                        .foregroundColor(resource.cor[1])
+                                        .foregroundColor(resourceType.cor[1])
                                         .padding(.top, 14)
                                         .padding(.bottom, 14)
                                     }
@@ -105,7 +109,7 @@ struct ResourceView: View {
                                     .cornerRadius(8)
                                 }
                                 .sheet(isPresented: $showGastoMensalSheet) {
-                                    GastoMensalSheetView(resource: resource)
+                                    GastoMensalSheetView(resource: resourceType)
                                 }
                             }
                             .font(.system(size: 16, weight: .regular))
@@ -125,7 +129,7 @@ struct ResourceView: View {
                 ScrollView(.horizontal){
                     HStack{
                         ForEach(Analysis.allCases, id: \.self){ analysis in
-                            AnalysisButtonView(analysis: analysis, resource: resource, valor: 0.3)
+                            AnalysisButtonView(analysis: analysis, resource: resourceType, valor: 0.3)
                         }
                     }
                 }
@@ -141,14 +145,17 @@ struct ResourceView: View {
                     .padding(.leading, 15)
                     
                     VStack(spacing: 12){
-                        ResourceGoalsView(resource: resource)
-                        ResourceGoalsView(resource: resource)
+                        ResourceGoalsView(resource: resourceType)
+                        ResourceGoalsView(resource: resourceType)
                     }
                     .padding(.bottom, 30)
                     
                 }
                 .frame(maxWidth: .infinity)
             }
+        }
+        .onAppear() {
+            
         }
         .ignoresSafeArea()
         
@@ -157,14 +164,17 @@ struct ResourceView: View {
 }
 
 #Preview {
-    ResourceView(resource: .agua)
+    ResourceView(resourceType: .agua)
+//        .environmentObject(ResourceViewModel(dataSource: <#SwiftDataService#>))
 }
 
 struct HistorySheetView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var resourceViewModel: ResourceViewModel
     @State private var selectionYear = "2024"
     @State var isShowingYearPicker = false
-    var resource: Resources
+    var resourceType: Resources
+//    var resource: ResourceData
     var body: some View {
         VStack(spacing: 18){
             HStack {
@@ -190,7 +200,7 @@ struct HistorySheetView: View {
                 }
                 
             }
-            .foregroundStyle(resource.cor[1])
+            .foregroundStyle(resourceType.cor[1])
             .font(.system(size: 19, weight: .bold))
             .padding(.top, 28)
             .padding(.bottom, 28)
@@ -198,11 +208,11 @@ struct HistorySheetView: View {
             HStack {
                 Text("Mês")
                 Spacer()
-                Text(resource.measurement)
+                Text(resourceType.measurement)
                 Spacer()
                 Text("Valor")
             }
-            .foregroundStyle(resource.cor[1])
+            .foregroundStyle(resourceType.cor[1])
             .font(.system(size: 20, weight: .bold))
             
             ScrollView(.vertical) {
@@ -223,6 +233,15 @@ struct HistorySheetView: View {
                     
                 }
                 .foregroundStyle(Color.azulEscuroDark)
+                
+                
+                ForEach(resourceViewModel.resources, id: \.id) { r in
+                    Text(r.type.rawValue)
+                    Text("\(r.history)")
+                }
+                .foregroundStyle(Color.black)
+                
+                
             }
             .padding(.bottom, 10)
             
@@ -235,20 +254,27 @@ struct HistorySheetView: View {
 }
 
 struct GastoMensalSheetView: View {
+    @EnvironmentObject var resourceViewModel: ResourceViewModel
     @Environment(\.dismiss) var dismiss
-    @State var begin = Date.now
-    @State var quantidade = ""
-    @State var valor = ""
+    @State var date = Date.now
+    @State var amount: Double?
+    @State var price: Double?
     var resource: Resources
     var body: some View {
+        
+        let formatter: NumberFormatter = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            return formatter
+        }()
+        
         NavigationStack {
             Form{
-                
                 Text("Adicionar um Gasto de \(resource.rawValue)")
                 Section{
-                    TextField("Quanditade gasta em \(resource.measurement)", text: $quantidade)
-                    TextField("Valor gasto em R$", text: $valor)
-                    DatePicker("Data", selection: $begin, displayedComponents: .date)
+                    TextField("Quanditade gasta em \(resource.measurement)", value: $amount, formatter: formatter)
+                    TextField("Valor gasto em R$", value: $price, formatter: formatter)
+                    DatePicker("Data", selection: $date, displayedComponents: .date)
                 }
             }
             .foregroundStyle(Color.verdeEscuroDark)
@@ -263,7 +289,17 @@ struct GastoMensalSheetView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing){
                     Button("Criar"){
-                        
+        
+                        var priceToSave: Double = 0.0
+                        var amountToSave: Double = 0.0
+                        if let price {
+                            priceToSave = price
+                        }
+                        if let amount{
+                            amountToSave = amount
+                        }
+//                        resourceViewModel.addSpending(type: resource, amount: amountToSave, date: date, price: priceToSave)
+                       
                     }
                     .foregroundStyle(.blue)
                 }
@@ -272,5 +308,3 @@ struct GastoMensalSheetView: View {
         .presentationDetents([.medium, .large])
     }
 }
-
-
