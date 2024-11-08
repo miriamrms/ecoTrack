@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 enum Tab: Int {
     case home = 0
     case certificado = 1
@@ -15,30 +14,34 @@ enum Tab: Int {
 }
 
 struct TabBarView: View {
-       
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(Color(.white))
+    }
+    
     @State var selectedTab: Tab = Tab.home
     
     var body: some View {
-        TabView {
-            //Text("Home")
+        TabView(selection: $selectedTab) {
             HomeView()
                 .tabItem {
                     Image("home")
                     Text("Início")
-                    // .font()
                 }
+                .tag(Tab.home)
 
-            Text("Certificados")
+            CertificateView()//ResourceView(resource: .agua)
                 .tabItem {
                     Image("certificado")
                     Text("Certificado")
                 }
+                .tag(Tab.certificado)
             
-            Text("Metas")
+            MetasView()
                 .tabItem {
                     Image("metas")
                     Text("Metas")
                 }
+                .tag(Tab.metas)
         }
         .tint(.verdeClaro)
     }
