@@ -14,9 +14,11 @@ enum Certificate: String, CaseIterable {
         switch self {
         case .iso:
             return "Gestão ambielntal eficaz para empresas sustentáveis"
-        case .seloverde: return "Reconhecimento por práticas empresariais sustentáveis"
+        case .seloverde:
+            return "Reconhecimento por práticas empresariais sustentáveis"
         }
     }
+    
     var goals: [String] {
         switch self {
         case .iso:

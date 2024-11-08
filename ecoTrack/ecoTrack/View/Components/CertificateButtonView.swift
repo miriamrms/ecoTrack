@@ -12,11 +12,9 @@ struct CertificateButtonView: View {
     var certificate: Certificate
     
     var body: some View {
-        
-        Button {}
-        
-        label: {
-            
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundStyle(.verdeEscuro)
             HStack {
                 
                 ZStack{
@@ -36,8 +34,8 @@ struct CertificateButtonView: View {
                     .frame(maxWidth: 10)
                 
                 VStack (alignment: .leading, spacing: 5){
-                   
-                   
+                    
+                    
                     Text(certificate.rawValue) //nome do certifcado
                         .font(
                             Font.system(size: 19)
@@ -48,7 +46,7 @@ struct CertificateButtonView: View {
                     Text(certificate.description)//descrição de certificado
                         .font(Font.system(size: 14))
                         .foregroundColor(.white)
-                        .frame(width: 204, alignment: .leading)
+                    
                         .multilineTextAlignment(.leading)
                     
                 }
@@ -56,17 +54,16 @@ struct CertificateButtonView: View {
                 Spacer()
                 
             }
-            .foregroundColor(.clear)
-            .frame(width: 353, height: 101)
-            .background(Color(red: 0.1, green: 0.33, blue: 0.36))
-            .cornerRadius(8)
+            //.foregroundColor(.clear)
+            
+            
+            
         }
-        
-        
+        .frame(width: 353, height: 101)
     }
 }
 
 #Preview {
-   //CertificateButtonView()
-   CertificateButtonView(certificate: .iso)
+    //CertificateButtonView()
+    CertificateButtonView(certificate: .iso)
 }
