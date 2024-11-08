@@ -19,6 +19,8 @@ struct ResourceView: View {
     @State var quantidadeGasta: String = ""
     @State var valorGasta: String = ""
     
+    @StateObject var resourceViewModel: ResourceViewModel = ResourceViewModel(dataSource: .shared)
+    
     var body: some View {
         ScrollView(){
             VStack(spacing: 40){
@@ -86,6 +88,7 @@ struct ResourceView: View {
                                 }
                                 .sheet(isPresented: $showHistorySheet) {
                                     HistorySheetView(resourceType: resourceType)
+                                        .environmentObject(resourceViewModel)
                                 }
                                 Button {
                                     showGastoMensalSheet.toggle()
@@ -150,6 +153,9 @@ struct ResourceView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
+        }
+        .onAppear() {
+            
         }
         .ignoresSafeArea()
         
@@ -229,11 +235,11 @@ struct HistorySheetView: View {
                 .foregroundStyle(Color.azulEscuroDark)
                 
                 
-//                ForEach(resourceViewModel.resources, id: \.id) { r in
-//                    Text(r.type.rawValue)
-//                    Text("\(r.history)")
-//                }
-//                .foregroundStyle(Color.black)
+                ForEach(resourceViewModel.resources, id: \.id) { r in
+                    Text(r.type.rawValue)
+                    Text("\(r.history)")
+                }
+                .foregroundStyle(Color.black)
                 
                 
             }
@@ -264,7 +270,6 @@ struct GastoMensalSheetView: View {
         
         NavigationStack {
             Form{
-                
                 Text("Adicionar um Gasto de \(resource.rawValue)")
                 Section{
                     TextField("Quanditade gasta em \(resource.measurement)", value: $amount, formatter: formatter)
@@ -303,5 +308,3 @@ struct GastoMensalSheetView: View {
         .presentationDetents([.medium, .large])
     }
 }
-
-
