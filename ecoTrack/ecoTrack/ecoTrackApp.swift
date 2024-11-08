@@ -10,10 +10,10 @@ import SwiftData
 
 @main
 struct ecoTrackApp: App {
-    let container: ModelContainer
+//    let container: ModelContainer
 //    @StateObject private var companyViewModel = CompanyViewModel(dataSource: .shared)
-    @StateObject private var resourceViewModel = ResourceViewModel(dataSource: .shared)
-    
+//    @StateObject private var resourceViewModel = ResourceViewModel(dataSource: .shared)
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -23,13 +23,13 @@ struct ecoTrackApp: App {
 //            ResourceView(resourceType: .agua)
 //                .environmentObject(resourceViewModel)
         }
-        .modelContainer(container)
+//        .modelContainer(container)
     }
-    init() {
-        do {
-            container = try ModelContainer(for: CompanyData.self)
-        } catch {
-            fatalError("Failed to create ModelContainer for Movie.")
-        }
-    }
+//    init() {
+//        do {
+//            container = try ModelContainer(for: CompanyData.self)
+//        } catch {
+//            fatalError("Failed to create ModelContainer for Movie.")
+//        }
+//    }
 }

@@ -61,3 +61,12 @@ class CompanyViewModel: ObservableObject{
 //    }
 
 }
+
+extension ResourceData {
+    static let dummyResources: [ResourceData] = [
+        ResourceData(type: .agua),
+        ResourceData(type: .energia),
+        ResourceData(type: .residuos)
+    ]
+}
+

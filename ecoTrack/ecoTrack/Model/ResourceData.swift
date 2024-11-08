@@ -15,7 +15,6 @@ class ResourceData: Identifiable {
     var history: [SpendData]
     var spendMedia: Double
     
-    
     init(type: Resources, history: [SpendData] = [], spendMedia: Double = 0.0) {
         id = UUID().uuidString
         self.type = type
@@ -26,12 +25,14 @@ class ResourceData: Identifiable {
 @Model
 class SpendData: Identifiable {
     var id: String
+    var resource: ResourceData?
     var data: Date
     var price: Double
     var amount: Double
     
-    init(data: Date, price: Double, amount: Double) {
+    init(resource: ResourceData, data: Date, price: Double, amount: Double) {
         id = UUID().uuidString
+        self.resource = resource
         self.data = data
         self.price = price
         self.amount = amount

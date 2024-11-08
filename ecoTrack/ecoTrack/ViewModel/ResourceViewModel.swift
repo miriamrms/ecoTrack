@@ -18,28 +18,35 @@ class ResourceViewModel: ObservableObject{
     private let dataSource = SwiftDataService.shared
     
     init(dataSource: SwiftDataService) {
-        let dummyResources = ResourceData.dummyResources
-        for resource in dummyResources {
-            dataSource.addResource(resource)
-        }
+//        let dummyResources = ResourceData.dummyResources
+//        for resource in dummyResources {
+//            dataSource.addResource(resource)
+//        }
         resources = dataSource.fetchResources()
+        printResources()
     }
     
-    func addSpending(type: Resources, amount: Double, date: Date, price: Double){
-        let resource = resources.filter {
-            $0.type == type
-        }.first!
-        let spending = SpendData(data: date, price: price, amount: amount)
+    func addSpending(resource: ResourceData, amount: Double, date: Date, price: Double){
+        let spending = SpendData(resource: resource, data: date, price: price, amount: amount)
         dataSource.addSpendToResource(resource, spending)
     }
     
-}
-
-extension ResourceData {
-    static let dummyResources: [ResourceData] = [
-        ResourceData(type: .agua),
-        ResourceData(type: .energia),
-        ResourceData(type: .residuos)
-    ]
+    func fetchResources(){
+        resources = dataSource.fetchResources()
+        printResources()
+    }
+    
+    func printResources(){
+        print("teste \(resources)")
+        for resource in resources {
+            print(resource.type.rawValue)
+        }
+    }
+    
+    func fetchResourcesTeste() -> [ResourceData]{
+        return dataSource.fetchResources()
+    }
+    
+    
 }
 

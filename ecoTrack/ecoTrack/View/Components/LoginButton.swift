@@ -21,6 +21,7 @@ struct LoginButton: View {
             if isButtonValid {
                 companyViewModel.addCompany(name: name, companySize: companySize)
                 showHomePage.toggle()
+                companyViewModel.addFixedResources()
             }
             else{
                 isShowingAlert = true
