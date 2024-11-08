@@ -7,19 +7,7 @@
 
 import SwiftUI
 
-enum Certificate: String, CaseIterable {
-    case iso = "ISO 1401 "
-    case seloverde = "Selo Verde"
 
-    
-    var description: String {
-        switch self {
-        case .iso: 
-            return "Gestão ambielntal eficaz para empresas sustentáveis"
-        case .seloverde: return "Reconhecimento por práticas empresariais sustentáveis"
-        }
-    }
-}
 
 struct CertificateView: View {
 
