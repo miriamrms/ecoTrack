@@ -127,7 +127,9 @@ struct HomeView: View {
                     
                     Spacer().frame(height: 10)
                     
-                    // ButtonView de exemplo para os certificados em progresso, se necessário
+                    CertificateCardView()
+                        .frame(maxWidth: .infinity)
+
                     
                     Spacer().frame(height: 10)
                 }
@@ -141,14 +143,14 @@ struct HomeView: View {
                 VStack(alignment: .leading) {
                     Spacer().frame(height: 10)
                     
-                    Text("Certificados concluídos")
+                    Text("Dicas sustentáveis")
                         .font(.system(size: 14))
                         .foregroundStyle(.azulEscuro)
                         .bold()
                     
                     Spacer().frame(height: 10)
                     
-                    // ButtonView de exemplo para os certificados concluídos, se necessário
+                    DicasButtonView().frame(maxWidth: .infinity)
                     
                 }
                 .padding(.horizontal, 20)
