@@ -32,44 +32,50 @@ struct MetaPopup: View {
                 //.padding()
 
             Divider()
-
-            HStack(spacing: 20) {
-                VStack(alignment: .leading) {
-                    Text("Média \n")
-                        .font(.system(size: 11))
-                        .fontWeight(.regular)
-                        .foregroundColor(.verdeClaro)
-                    Text("Investimento Inicial")
-                        .font(.system(size: 16))
-                        .fontWeight(.bold)
-                        .foregroundColor(.verdeClaro)
-                }
-                Spacer()
-                Text("\n A partir de R$ \(meta.investimentoInicial, specifier: "%.2f")")
-                    .foregroundColor(.verdeClaro)
-            }
-            .font(.system(size: 16))
-            .fontWeight(.bold)
-            .padding(.horizontal)
-            HStack(spacing: 20) {
-                VStack(alignment: .leading) {
-                    Text("Média \n")
-                        .font(.system(size: 11))
-                        .fontWeight(.regular)
-                        .foregroundColor(.verdeClaro)
-                    Text("Economia a longo prazo")
-                        .font(.system(size: 16))
-                        .fontWeight(.bold)
+            if meta.investimentoInicial > 0 {
+                HStack(spacing: 20) {
+                    VStack(alignment: .leading) {
+                        Text("Média \n")
+                            .font(.system(size: 11))
+                            .fontWeight(.regular)
+                            .foregroundColor(.verdeClaro)
+                        Text("Investimento Inicial")
+                            .font(.system(size: 16))
+                            .fontWeight(.bold)
+                            .foregroundColor(.verdeClaro)
+                    }
+                    Spacer()
+                    
+                    Text("\n A partir de R$ \(meta.investimentoInicial, specifier: "%.2f")")
                         .foregroundColor(.verdeClaro)
                 }
-                Spacer()
-                Text("\n Até -\(meta.porcentagemReducao)% de gasto mensal")
-                    .foregroundColor(.verdeClaro)
+                .font(.system(size: 16))
+                .fontWeight(.bold)
+                .padding(.horizontal)
             }
-            .font(.system(size: 16))
-            .fontWeight(.bold)
-            .padding(.horizontal)
+            
+            if meta.porcentagemReducao > 0 {
+                HStack(spacing: 20) {
+                    VStack(alignment: .leading) {
+                        Text("Média \n")
+                            .font(.system(size: 11))
+                            .fontWeight(.regular)
+                            .foregroundColor(.verdeClaro)
+                        Text("Economia a longo prazo")
+                            .font(.system(size: 16))
+                            .fontWeight(.bold)
+                            .foregroundColor(.verdeClaro)
+                    }
+                    Spacer()
+                    Text("\n Até -\(meta.porcentagemReducao)% de gasto mensal")
+                        .foregroundColor(.verdeClaro)
+                }
+                .font(.system(size: 16))
+                .fontWeight(.bold)
+                .padding(.horizontal)
 
+            }
+            
             Spacer()
 
             VStack {
@@ -113,8 +119,6 @@ struct AddMetaSheet: View {
     @ObservedObject var viewModel: MetasViewModel
     @State private var tipoSelecionado: TipoMeta = .geral
     @State private var descricao: String = ""
-    @State private var investimentoInicial: String = ""
-    @State private var porcentagemReducao: String = ""
     @Environment(\.presentationMode) var presentationMode // Adicionando para controlar o fechamento da sheet
 
     var body: some View {
@@ -183,84 +187,47 @@ struct AddMetaSheet: View {
                     )
             }
 
-            // Campo de Investimento Inicial
-            VStack(alignment: .leading) {
-                Text("Investimento Inicial")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.verdeClaro)
-                TextField("R$ 0,00", text: $investimentoInicial)
-                    .keyboardType(.decimalPad)
-                    .padding(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.verdeClaro, lineWidth: 1)
-                    )
-                    .padding(.bottom, 20)
-            }
+            // Botão para adicionar meta
+                        Button(action: {
+                            if !descricao.isEmpty {
+                                viewModel.adicionarMeta(tipo: tipoSelecionado, descricao: descricao)
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: "plus.square.fill")
+                                Text("Adicionar meta")
+                                    .bold()
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(!descricao.isEmpty ? Color.verdeClaro : Color.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(4)
+                        }
+                        .padding(.top, 20)
+                        .disabled(descricao.isEmpty)
 
-            // Campo de Porcentagem de Redução
-            VStack(alignment: .leading) {
-                Text("Porcentagem de Redução")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.verdeClaro)
-                TextField("0%", text: $porcentagemReducao)
-                    .keyboardType(.numberPad)
-                    .padding(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.verdeClaro, lineWidth: 1)
-                    )
-                    .padding(.bottom, 20)
-            }
-
-
-            Button(action: {
-                if camposValidos() {
-                    viewModel.adicionarMeta(tipo: tipoSelecionado, descricao: descricao, investimentoInicial: Double(investimentoInicial) ?? 0, porcentagemReducao: Int(porcentagemReducao) ?? 0)
-                    presentationMode.wrappedValue.dismiss() // Fecha a sheet
-                }
-            }) {
-                HStack {
-                    Image(systemName: "plus.square.fill")
-                    Text("Adicionar meta")
-                        .bold()
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(camposValidos() ? Color.verdeClaro : Color.gray)
-                .foregroundColor(.white)
-                .cornerRadius(4)
-            }
-            .padding(.top, 20)
-            .disabled(!camposValidos()) // Desabilita o botão se os campos não forem válidos
-
-            //Spacer()
-
-            Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Voltar")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.white)
+                        // Botão Voltar
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text("Voltar")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .frame(maxHeight: 35)
+                                .background(Color(UIColor.darkLight))
+                                .cornerRadius(4)
+                        }
+                    }
                     .padding()
-                    .frame(maxWidth: .infinity)
-                    .frame(maxHeight: 35)
-                    .background(Color(UIColor.darkLight))
+                    .background(Color(UIColor.systemBackground))
                     .cornerRadius(4)
+                    .shadow(radius: 10)
+                }
             }
-        }
-        .padding()
-        .background(Color(UIColor.systemBackground))
-        //.background(Color(UIColor.blue))//(Color(UIColor.systemBackground))
-        .cornerRadius(4)
-        .shadow(radius: 10)
-    }
-
-    // Função para validar os campos
-    func camposValidos() -> Bool {
-        return !descricao.isEmpty && !investimentoInicial.isEmpty && !porcentagemReducao.isEmpty && Double(investimentoInicial) != nil && Int(porcentagemReducao) != nil
-    }
-}
 
 
 #Preview {
