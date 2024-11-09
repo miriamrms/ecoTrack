@@ -8,9 +8,10 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-class ResourceViewModel: ObservableObject{
+class ResourcesViewModel: ObservableObject{
     
     @Published var resources: [ResourceData] = []
+    @Published var selectedResource: ResourceData?
 //    @Published var water: ResourceData = ResourceData(type: .agua)
 //    @Published var energy: ResourceData = ResourceData(type: .energia)
 //    @Published var waste: ResourceData = ResourceData(type: .residuos)
@@ -45,6 +46,29 @@ class ResourceViewModel: ObservableObject{
     
     func fetchResourcesTeste() -> [ResourceData]{
         return dataSource.fetchResources()
+    }
+//    func changeSelectedResources(resourceType: Resources){
+//        resources = dataSource.fetchResources()
+//        for resource in resources {
+//            if resource.type == resourceType {
+//                selectedResource = resource
+//            }
+//            else{
+//            
+//            }
+//        }
+//    }
+    func findSpendData(resoucesType: Resources) -> [SpendData]{
+        let resources = dataSource.fetchResources()
+        var spending: [SpendData] = []
+        for resource in resources {
+            if resource.type == resoucesType {
+                spending = resource.history
+            }
+            else {
+                spending = []            }
+        }
+        return spending
     }
     
     
