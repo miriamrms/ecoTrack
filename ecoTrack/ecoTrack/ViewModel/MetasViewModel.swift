@@ -30,8 +30,8 @@ class MetasViewModel: ObservableObject {
         metas.removeAll { $0.id == meta.id }
     }
     
-    func adicionarMeta(tipo: TipoMeta, descricao: String, investimentoInicial: Double, porcentagemReducao: Int) {
-        let novaMeta = Meta(tipo: tipo, descricao: descricao, investimentoInicial: investimentoInicial, porcentagemReducao: porcentagemReducao, concluida: false)
+    func adicionarMeta(tipo: TipoMeta, descricao: String) {
+        let novaMeta = Meta(tipo: tipo, descricao: descricao, investimentoInicial: 0, porcentagemReducao: 0, concluida: false)
         metas.append(novaMeta)
     }
 }
