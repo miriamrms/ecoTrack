@@ -38,6 +38,7 @@ enum Recurso: String, CaseIterable{
 
 struct HomeView: View {
   
+    @StateObject var resourceViewModel: ResourcesViewModel = ResourcesViewModel(dataSource: .shared)
     @EnvironmentObject var companyViewModel: CompanyViewModel
     @State var ShowModal = false
     
@@ -95,10 +96,10 @@ struct HomeView: View {
                             .bold()
                         
                         Spacer().frame(height: 10)
-                        
-                        ForEach(Resources.allCases, id: \.self) { recurso in
-                            NavigationLink(destination: ResourceView(resourceType: recurso)) {
-                                ButtonView(recurso: recurso)
+                                                
+                        ForEach(resourceViewModel.resources, id: \.id){ resource in
+                            NavigationLink(destination: ResourceView(resourceType: resource.type, resource: resource).environmentObject(resourceViewModel)) {
+                                ButtonView(recursoType: resource.type)
                                     .frame(maxWidth: .infinity)
                             }
                         }

@@ -11,14 +11,14 @@ import SwiftUI
 struct ButtonView: View {
     
     @State var valor: Double = 0.0
-    var recurso: Resources
+    var recursoType: Resources
     
     var body: some View {
         
         ZStack(alignment: .top){
             
             Rectangle()//retangulo maior fundo claro
-                .foregroundStyle(recurso.cor[0])
+                .foregroundStyle(recursoType.cor[0])
                 .frame(width: 353,height: 100)
                 .cornerRadius(8)
             
@@ -28,13 +28,13 @@ struct ButtonView: View {
                 ZStack {//retangulo superior escuro
                     UnevenRoundedRectangle (topLeadingRadius: 8, topTrailingRadius: 8)
                         .frame(width: 353, height: 50)
-                        .foregroundStyle(recurso.cor[1])
+                        .foregroundStyle(recursoType.cor[1])
                     
                     
                     HStack{ //infos parte superior
-                        Image(recurso.icone)
+                        Image(recursoType.icone)
                         
-                        Text(recurso.rawValue)//nome do recurso
+                        Text(recursoType.rawValue)//nome do recurso
                             .foregroundStyle(.white)
                             .font(.system(size: 19, weight: .bold))
                         
@@ -120,5 +120,5 @@ struct ButtonView: View {
 }
 
 #Preview {
-    ButtonView(recurso: .residuos)
+    ButtonView(recursoType: .residuos)
 }
