@@ -57,7 +57,7 @@ class ResourcesViewModel: ObservableObject{
         return spending
     }
     
-    func MediaAnalysis(_ resourceType: Resources) -> Double{
+    func GeneralMediaAnalysis(_ resourceType: Resources) -> Double{
         if company.companySize == .micro {
             return resourceType.microEmpresa
         }
@@ -66,6 +66,65 @@ class ResourcesViewModel: ObservableObject{
         }
         else{
             return resourceType.mediaEmpresa
+        }
+    }
+    
+    func getPercent(_ resource: ResourceData) -> Double{
+        let generalMedia = GeneralMediaAnalysis(resource.type)
+        let percent: Double = resource.spendMediaPrice * 100 / generalMedia
+        
+        return percent
+    }
+    
+    func isPercentGreaterThan(_ percent: Double) -> Bool{
+         if percent > 100 {
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    func percentDiference(_ resource: ResourceData) -> Double{
+        let percent = getPercent(resource)
+        if isPercentGreaterThan(percent){
+            return percent - 100
+        }
+        else{
+            return 100 - percent
+        }
+    }
+    
+    func returnAnalysis(_ resource: ResourceData) -> String{
+        let percent = getPercent(resource)
+        let percentDiference = percentDiference(resource)
+        if percentDiference == 0{
+            return "Seu gasto de \(resource.type.rawValue) está na média de empresas do mesmo porte."
+        }
+        else{
+            if isPercentGreaterThan(percent){
+                return "Seu gasto de \(resource.type.rawValue) está \(String(format: "%.2f",percentDiference))% acima da média de empresas do mesmo porte."
+            }
+            else{
+                return "Seu gasto de \(resource.type.rawValue) está \(String(format: "%.2f",percentDiference))% abaixo da média de empresas do mesmo porte."
+            }
+        }
+        
+    }
+    
+    func comparativeArrow(_ resource: ResourceData) -> String{
+        let percent = getPercent(resource)
+        let percentDiference = percentDiference(resource)
+        if percentDiference == 0{
+            return ""
+        }
+        else{
+            if isPercentGreaterThan(percent){
+                return "arrowtriangle.up.fill"
+            }
+            else{
+                return "arrowtriangle.down.fill"
+            }
         }
     }
     

@@ -59,7 +59,6 @@ struct ResourceView: View {
                                     .overlay(Color.white)
                                 HStack{
                                     Image("ruler")
-//                                    String(format: "%.2f", value)
                                     Text("\(String(format: "%2.f",resource.spendMediaAmount)) \(resource.type.measurement)")
                                 }
                                 .font(.system(size: 23, weight: .bold))
@@ -133,7 +132,7 @@ struct ResourceView: View {
                 ScrollView(.horizontal){
                     HStack{
                         ForEach(Analysis.allCases, id: \.self){ analysis in
-                            AnalysisButtonView(analysis: analysis, resource: resourceType, valor: 0.3)
+                            AnalysisButtonView(analysis: analysis, resource: resource)
                         }
                     }
                 }
