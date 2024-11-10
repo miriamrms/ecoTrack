@@ -18,6 +18,7 @@ struct OnBoarding3: View {
             ZStack {
                 Image("backgroundOnBoarding")
                     .resizable()
+                    .scaledToFill()
                     .ignoresSafeArea()
                 
                 VStack(alignment: .center, spacing: 20){
