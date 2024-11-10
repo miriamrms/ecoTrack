@@ -31,8 +31,7 @@ class CompanyViewModel: ObservableObject{
      }
  
     func editCompany(name: String, companySize: CompanySize) {
-        
-        
+        dataSource.editCompany(name, companySize)
     }
     
     func addFixedResources(){

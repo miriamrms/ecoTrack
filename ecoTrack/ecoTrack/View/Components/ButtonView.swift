@@ -10,15 +10,16 @@ import SwiftUI
 
 struct ButtonView: View {
     
-    @State var valor: Double = 0.0
-    var recursoType: Resources
+    @State var showGastoMensalSheet: Bool = false
+    
+    var resource: ResourceData
     
     var body: some View {
         
         ZStack(alignment: .top){
             
             Rectangle()//retangulo maior fundo claro
-                .foregroundStyle(recursoType.cor[0])
+                .foregroundStyle(resource.type.cor[0])
                 .frame(width: 353,height: 100)
                 .cornerRadius(8)
             
@@ -28,13 +29,13 @@ struct ButtonView: View {
                 ZStack {//retangulo superior escuro
                     UnevenRoundedRectangle (topLeadingRadius: 8, topTrailingRadius: 8)
                         .frame(width: 353, height: 50)
-                        .foregroundStyle(recursoType.cor[1])
+                        .foregroundStyle(resource.type.cor[1])
                     
                     
                     HStack{ //infos parte superior
-                        Image(recursoType.icone)
+                        Image(resource.type.icone)
                         
-                        Text(recursoType.rawValue)//nome do recurso
+                        Text(resource.type.rawValue)//nome do recurso
                             .foregroundStyle(.white)
                             .font(.system(size: 19, weight: .bold))
                         
@@ -63,30 +64,37 @@ struct ButtonView: View {
                 
                 Spacer() //alinhamento centralizado das informacoes inferiores
                     .frame(maxHeight: 13)
-                if valor == 0{
+                if resource.spendMediaAmount == 0{
                     
-                    HStack{ //infos parte inferior nao preenchida
-                        
-                        Spacer()
-                            .frame(maxWidth: 12)
-                        
-                        Image("plus")
-                        
-                        Spacer()
-                            .frame(maxWidth: 10)
-                        
-                        Text("Adicione seus gastos mensais")
-                            .foregroundStyle(.white)
-                            .font(.system(size: 12, weight:.bold))
-                            .frame(maxWidth: 104, maxHeight: 30)
-                            .multilineTextAlignment(TextAlignment.leading)
-                        
-                        Spacer()
-                            .frame(maxWidth: .infinity)
-                        
+                    Button {
+                        showGastoMensalSheet.toggle()
+                    } label: {
+                        HStack{ //infos parte inferior nao preenchida
+                            
+                            Spacer()
+                                .frame(maxWidth: 12)
+                            
+                            Image("plus")
+                            
+                            Spacer()
+                                .frame(maxWidth: 10)
+                            
+                            Text("Adicione seus gastos mensais")
+                                .foregroundStyle(.white)
+                                .font(.system(size: 12, weight:.bold))
+                                .frame(maxWidth: 104, maxHeight: 30)
+                                .multilineTextAlignment(TextAlignment.leading)
+                            
+                            Spacer()
+                                .frame(maxWidth: .infinity)
+                            
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
-                    
+                    .sheet(isPresented: $showGastoMensalSheet) {
+                        GastoMensalSheetView(resource: resource)
+                            .multilineTextAlignment(.leading)
+                    }
                     
                     Spacer() //alinhamento centralizado das informacoes inferiores
                         .frame(maxHeight: 9)
@@ -95,7 +103,7 @@ struct ButtonView: View {
                     HStack{ //infos parte inferior
                         
                         Image("ruler")
-                        Text("100ml")
+                        Text("\(String(format: "R$%.2f", resource.spendMediaAmount))\(resource.type.measurement)")
                             .foregroundStyle(.white)
                             .font(.system(size: 16, weight:.bold))
                         
@@ -103,7 +111,7 @@ struct ButtonView: View {
                             .frame(maxWidth:27)
                         
                         Image("coin")
-                        Text("R$546,00")
+                        Text(String(format: "R$%.2f", resource.spendMediaPrice))
                             .foregroundStyle(.white)
                             .font(.system(size: 16, weight: .bold))
                         
@@ -120,5 +128,5 @@ struct ButtonView: View {
 }
 
 #Preview {
-    ButtonView(recursoType: .residuos)
+    ButtonView(resource: ResourceData(type: .residuos))
 }

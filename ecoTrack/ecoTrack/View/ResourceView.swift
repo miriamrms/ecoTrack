@@ -91,7 +91,6 @@ struct ResourceView: View {
                                 }
                                 .sheet(isPresented: $showHistorySheet) {
                                     HistorySheetView(resourceType: resourceType)
-                                    //                                        .environmentObject(resourceViewModel)
                                 }
                                 Button {
                                     showGastoMensalSheet.toggle()
@@ -113,6 +112,7 @@ struct ResourceView: View {
                                 }
                                 .sheet(isPresented: $showGastoMensalSheet) {
                                     GastoMensalSheetView(resource: resource)
+                                        .environmentObject(resourceViewModel)
                                 }
                             }
                             .font(.system(size: 16, weight: .regular))
@@ -166,9 +166,9 @@ struct ResourceView: View {
     
 }
 
-#Preview {
-    ResourceView(resourceType: .agua, resource: ResourceData(type: .agua, spendMedia: 0.0))
-}
+//#Preview {
+//    ResourceView(resourceType: .agua, resource: ResourceData(type: .agua, spendMedia: 0.0))
+//}
 
 struct HistorySheetView: View {
     @Environment(\.dismiss) var dismiss

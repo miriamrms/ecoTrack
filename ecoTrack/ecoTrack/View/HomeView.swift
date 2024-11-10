@@ -8,34 +8,6 @@
 import SwiftUI
 import SwiftData
 
-enum Recurso: String, CaseIterable{
-    case agua = "Água"
-    case energia = "Energia"
-    case residuos = "Resíduos"
-    
-    var icone: String {
-        switch self {
-        case .agua:
-            return "waterIcon"
-        case .energia:
-            return "energyIcon"
-        case .residuos:
-            return "wasteIcon"
-        }
-    }
-    
-    var cor: [Color] {
-        switch self {
-        case .agua:
-            return [.azulAguaLight, .azulAgua]
-        case .energia:
-            return [.amareloEnergiaLight, .amareloEnergia]
-        case .residuos:
-            return [.laranjaResiLight, .laranjaResi]
-        }
-    }
-}
-
 struct HomeView: View {
   
     @StateObject var resourceViewModel: ResourcesViewModel = ResourcesViewModel(dataSource: .shared)
@@ -99,7 +71,7 @@ struct HomeView: View {
                                                 
                         ForEach(resourceViewModel.resources, id: \.id){ resource in
                             NavigationLink(destination: ResourceView(resourceType: resource.type, resource: resource).environmentObject(resourceViewModel)) {
-                                ButtonView(recursoType: resource.type)
+                                ButtonView(resource: resource)
                                     .frame(maxWidth: .infinity)
                             }
                         }

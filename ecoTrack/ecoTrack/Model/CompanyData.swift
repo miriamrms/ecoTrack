@@ -18,32 +18,3 @@ class CompanyData: Identifiable {
         self.companySize = companySize
     }
 }
-
-
-
-
-//MARK: Company
-//nome: String
-//porte: String
-//segmento: String
-//
-//recursos: [Recurso]
-//residuos: [Residuo]
-//certificadosEmProgresso: [Certificado]
-
-
-//MARK: Residuos
-//nome: String
-//tipo: String
-//quantidadeAcumulada: Double
-//balanço: Double
-//unidadeDeMedida: String
-//histórico: [(quantidade: Float, data: Date)]
-//descartes: [Descarte]
-
-//MARK: Descarte
-//local: String
-//data: Date
-//quantidade: Double
-//preço: Double
-
