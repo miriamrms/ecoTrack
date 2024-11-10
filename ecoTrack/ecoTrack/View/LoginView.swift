@@ -1,4 +1,3 @@
-
 //
 //  LoginView.swift
 //  ecoTrack
@@ -114,7 +113,7 @@ struct LoginView: View {
                     NotificationCenter.default.removeObserver(self)
                 }
             }
-        }
+        }.edgesIgnoringSafeArea(.top)
     }
 }
 
