@@ -11,8 +11,8 @@ import SwiftUI
 struct ButtonView: View {
     
     var resource: ResourceData
-    @State var valor: Double = 6.0
     var recursoType: Resources
+    @State var showGastoMensalSheet: Bool = false
     
     var body: some View {
         
@@ -66,28 +66,35 @@ struct ButtonView: View {
                     .frame(maxHeight: 13)
                 if resource.spendMediaAmount == 0{
                     
-                    HStack{ //infos parte inferior nao preenchida
-                        
-                        Spacer()
-                            .frame(maxWidth: 12)
-                        
-                        Image("plus")
-                        
-                        Spacer()
-                            .frame(maxWidth: 10)
-                        
-                        Text("Adicione seus gastos mensais")
-                            .foregroundStyle(.white)
-                            .font(.system(size: 12, weight:.bold))
-                            .frame(maxWidth: 104, maxHeight: 30)
-                            .multilineTextAlignment(TextAlignment.leading)
-                        
-                        Spacer()
-                            .frame(maxWidth: .infinity)
-                        
+                    Button {
+                        showGastoMensalSheet.toggle()
+                    } label: {
+                        HStack{ //infos parte inferior nao preenchida
+                            
+                            Spacer()
+                                .frame(maxWidth: 12)
+                            
+                            Image("plus")
+                            
+                            Spacer()
+                                .frame(maxWidth: 10)
+                            
+                            Text("Adicione seus gastos mensais")
+                                .foregroundStyle(.white)
+                                .font(.system(size: 12, weight:.bold))
+                                .frame(maxWidth: 104, maxHeight: 30)
+                                .multilineTextAlignment(TextAlignment.leading)
+                            
+                            Spacer()
+                                .frame(maxWidth: .infinity)
+                            
+                        }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
-                    
+                    .sheet(isPresented: $showGastoMensalSheet) {
+                        GastoMensalSheetView(resource: resource)
+                            .multilineTextAlignment(.leading)
+                    }
                     
                     Spacer() //alinhamento centralizado das informacoes inferiores
                         .frame(maxHeight: 9)
