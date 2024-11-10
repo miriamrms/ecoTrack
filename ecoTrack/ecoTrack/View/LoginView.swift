@@ -1,3 +1,4 @@
+
 //
 //  LoginView.swift
 //  ecoTrack
@@ -17,9 +18,11 @@ struct LoginView: View {
     @State var isShowingAlert: Bool = true
     @State var showHomePage: Bool = false
     @EnvironmentObject var companyViewModel: CompanyViewModel
-    
+    @State private var keyboardHeight: CGFloat = 0
+
+
     var body: some View {
-        ZStack(alignment: .top){
+        ZStack(alignment: .top) {
             ScrollView {
                 VStack {
                     // MARK: Header
@@ -41,7 +44,7 @@ struct LoginView: View {
                     .frame(height: 480)
                     .background(Color("verdeClaro"))
                     .ignoresSafeArea()
-                    
+
                     // MARK: TextFields
                     VStack(alignment: .leading, spacing: 27) {
                         VStack(alignment: .leading) {
@@ -50,7 +53,7 @@ struct LoginView: View {
                             TextField("Nome da sua Empresa", text: $companyName)
                                 .modifier(customViewModifier())
                         }
-                        
+
                         HStack {
                             Image(companySize == nil ? "portePequeno" : companySize!.icon)
                             VStack(alignment: .leading) {
@@ -60,7 +63,7 @@ struct LoginView: View {
                             }
                         }
                         .accentColor(.verdeClaro)
-                        
+
                         LoginButton(
                             isButtonValid: $isButtonActive,
                             name: $companyName,
@@ -68,34 +71,59 @@ struct LoginView: View {
                             showHomePage: $showHomePage
                         )
                     }
+                    .padding(.horizontal, 15)
+                    .padding(.top, 28)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .foregroundStyle(Color("verdeClaro"))
                     .padding(15)
                     .padding(.top, 28)
                     .onChange(of: ((companyName != "") && ((companySize) != nil))) { newValue in
-                        saveCompanySize = companySize!
-                        isButtonActive.toggle()
+                        isButtonActive = newValue
+                        if let size = companySize {
+                            saveCompanySize = size
+                        }
                     }
                     .onChange(of: showHomePage) { newValue in
                         UserDefaults.standard.set(true, forKey: "hasCompletedLogin")
                         hasCompletedLogin = true
                     }
-                    //                    .fullScreenCover(isPresented: $showHomePage, content: {
-                    //                        HomeView()
-                    //                    })
+                }
+                .padding(.bottom, keyboardHeight)
+                .animation(.easeOut(duration: 0.3), value: keyboardHeight) //.animation(.easeOut(duration: 0.3))
+                .onAppear {
+                    // vai observar qdo o teclado aparece e desaparece
+                    NotificationCenter.default.addObserver(
+                        forName: UIResponder.keyboardWillShowNotification,
+                        object: nil,
+                        queue: .main
+                    ) { notification in
+                        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                            keyboardHeight = keyboardFrame.height - 60
+                        }
+                    }
+                    NotificationCenter.default.addObserver(
+                        forName: UIResponder.keyboardWillHideNotification,
+                        object: nil,
+                        queue: .main
+                    ) { _ in
+                        keyboardHeight = 0
+                    }
+                }
+                .onDisappear {
+                    NotificationCenter.default.removeObserver(self)
                 }
             }
-            .ignoresSafeArea()
         }
     }
+}
+
     
     // Função para marcar login como concluído
     //    private func completeLogin() {
     //        UserDefaults.standard.set(true, forKey: "hasCompletedLogin")
     //        hasCompletedLogin = true
     //    }
-}
 
 // #Preview {
 //     LoginView(hasCompletedLogin: .constant(false))
