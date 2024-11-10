@@ -11,10 +11,12 @@ struct AnalysisButtonView: View {
     @EnvironmentObject var resourceViewModel: ResourcesViewModel
     
     var analysis: Analysis
-    var resource: Resources
+    var resource: ResourceData
     
     @State var showingAlert: Bool = false
-    var valor: Double
+    var percent: Double {
+        resourceViewModel.percentDiference(resource)
+    }
    
     var body: some View {
         
@@ -23,33 +25,33 @@ struct AnalysisButtonView: View {
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(resource.cor[1])
+                    .fill(resource.type.cor[1])
                     .frame(maxHeight: 75)
                     .padding(.leading,12)
 
                 HStack{
-                    Image(analysis == .comparative ? resource.comparativeIcon : resource.mediaIcon)
+                    Image(analysis == .comparative ? resource.type.comparativeIcon : resource.type.mediaIcon)
                         
                     VStack(alignment: .leading){
                         Text(analysis.rawValue)
                             .font(.system(size: 14, weight: .bold))
                         if analysis == .media{
-                            Text("Porte da Empresa")
+                            Text(resourceViewModel.company.companySize.group)
                                 .font(.system(size: 9.7, weight: .regular))
                         }
                     }
                     Spacer()
                     if analysis == .comparative{
-                        Image(systemName: valor < 0.0 ? "arrowtriangle.down.fill" : "arrowtriangle.up.fill")
+                        Image(systemName: resourceViewModel.comparativeArrow(resource))
                             .font(.system(size: 23, weight: .bold))
-                        Text(String(format: "%.2f%%", valor))
+                        Text(String(format: "%.2f%%", percent))
                             .padding(.top, 23.5)
                             .padding(.bottom, 23.5)
                             .font(.system(size: 23, weight: .bold))
                             .padding(.trailing,20)
                     }
                     else{
-                        Text(String(format: "R$%.2f", resourceViewModel.MediaAnalysis(resource)))
+                        Text(String(format: "R$%.2f", resourceViewModel.GeneralMediaAnalysis(resource.type)))
                             .padding(.top, 23.5)
                             .padding(.bottom, 23.5)
                             .font(.system(size: 23, weight: .bold))
@@ -65,10 +67,10 @@ struct AnalysisButtonView: View {
         }
         .alert(isPresented: $showingAlert) {
             if analysis == .comparative{
-                Alert(title: Text(analysis.rawValue), message: Text("Seu gasto de energia está 11% acima da média de empresas do mesmo porte."), dismissButton: .default(Text("OK")))
+                Alert(title: Text(analysis.rawValue), message: Text(resourceViewModel.returnAnalysis(resource)), dismissButton: .default(Text("OK")))
             }
             else{
-                Alert(title: Text(analysis.rawValue), message: Text("A média mensal de gastos com \(resource.rawValue) de \(resourceViewModel.company.companySize.group) é R$ \(String(format: "R$%.2f", resourceViewModel.MediaAnalysis(resource)))"), dismissButton: .default(Text("OK")))
+                Alert(title: Text(analysis.rawValue), message: Text("A média mensal de gastos com \(resource.type.rawValue) de \(resourceViewModel.company.companySize.group) é R$ \(String(format: "R$%.2f", resourceViewModel.GeneralMediaAnalysis(resource.type)))"), dismissButton: .default(Text("OK")))
             }
         }
 
