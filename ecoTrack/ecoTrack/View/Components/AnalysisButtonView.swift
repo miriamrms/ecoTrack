@@ -37,9 +37,12 @@ struct AnalysisButtonView: View {
                             .font(.system(size: 14, weight: .bold))
                         if analysis == .media{
                             Text(resourceViewModel.company.companySize.group)
+                                .multilineTextAlignment(.leading)
                                 .font(.system(size: 9.7, weight: .regular))
+                                
                         }
                     }
+                    .frame(maxWidth: 100)
                     Spacer()
                     if analysis == .comparative{
                         Image(systemName: resourceViewModel.comparativeArrow(resource))
@@ -54,15 +57,17 @@ struct AnalysisButtonView: View {
                         Text(String(format: "R$%.2f", resourceViewModel.GeneralMediaAnalysis(resource.type)))
                             .padding(.top, 23.5)
                             .padding(.bottom, 23.5)
-                            .font(.system(size: 23, weight: .bold))
+                            .font(.system(size: 19, weight: .bold))
                             .padding(.trailing,20)
+                            .frame(minWidth: 105)
+                           
                     }
                    
                 }
                 .foregroundStyle(Color.white)
                 
             }
-            .frame(maxWidth: 312, maxHeight: 75)
+            .frame(minWidth: 312, maxHeight: 75)
             .padding(.leading,7)
         }
         .alert(isPresented: $showingAlert) {
