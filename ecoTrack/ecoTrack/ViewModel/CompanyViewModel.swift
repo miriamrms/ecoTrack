@@ -30,7 +30,6 @@ class CompanyViewModel: ObservableObject{
         }
      }
  
-    
     func editCompany(name: String, companySize: CompanySize) {
         
         
@@ -43,22 +42,6 @@ class CompanyViewModel: ObservableObject{
         }
         
     }
-    
-//    func deleteCompany(_ company: CompanyData) {
-//        modelContext.delete(company)
-//        fetchData()
-//    }
-    
-//    func fetchData() {
-//        do {
-//            let descriptor = FetchDescriptor<CompanyData>(sortBy: [SortDescriptor(\CompanyData.name)])
-//            let fetchItens: [CompanyData] = try modelContext.fetch(descriptor)
-//
-//            company = fetchItens.first
-//        } catch {
-//            print("Fetch failed")
-//        }
-//    }
 
 }
 

@@ -88,7 +88,41 @@ enum Resources: String, CaseIterable, Codable{
             return "Kg"
         }
     }
+    
+    var microEmpresa: Double {
+        switch self {
+        case .agua:
+            return 100
+        case .energia:
+            return 300
+        case .residuos:
+            return 100
+        }
+    }
+    
+    var pequenaEmpresa: Double {
+        switch self {
+        case .agua:
+            return 300
+        case .energia:
+            return 1500
+        case .residuos:
+            return 300
+        }
+    }
+    
+    var mediaEmpresa: Double {
+        switch self {
+        case .agua:
+            return 1500
+        case .energia:
+            return 5000
+        case .residuos:
+            return 1000
+        }
+    }
 }
+
 
 enum Analysis: String, CaseIterable{
     case comparative = "Análise Comparativa"

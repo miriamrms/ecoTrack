@@ -55,6 +55,24 @@ class SwiftDataService {
         }
     }
     
+    func updateMedia(_ resource: ResourceData) {
+        var sumPrice: Double = 0
+        var sumAmount: Double = 0
+        var count: Int = 0
+        for spending in resource.history {
+            sumPrice += spending.price
+            sumAmount += spending.amount
+            count += 1
+        }
+        resource.spendMediaPrice = sumPrice / Double(count)
+        resource.spendMediaAmount = sumAmount / Double(count)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
     func addSpendToResource(_ resource: ResourceData, _ spend: SpendData) {
         resource.history.append(spend)
         do {

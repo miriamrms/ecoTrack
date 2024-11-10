@@ -10,8 +10,11 @@ import Foundation
 import SwiftData
 
 struct ResourceView: View {
+    @EnvironmentObject var resourceViewModel: ResourcesViewModel
+    
     var resourceType: Resources
     var resource: ResourceData
+    
     let width = UIScreen.main.bounds.width
     let height = UIScreen.main.bounds.height
     
@@ -20,7 +23,6 @@ struct ResourceView: View {
     @State var quantidadeGasta: String = ""
     @State var valorGasta: String = ""
     
-    //    @EnvironmentObject var resourceViewModel: ResourceViewModel
     
     var body: some View {
         ScrollView(){
@@ -57,12 +59,13 @@ struct ResourceView: View {
                                     .overlay(Color.white)
                                 HStack{
                                     Image("ruler")
-                                    Text("1652 \(resource.type.measurement)")
+//                                    String(format: "%.2f", value)
+                                    Text("\(String(format: "%2.f",resource.spendMediaAmount)) \(resource.type.measurement)")
                                 }
                                 .font(.system(size: 23, weight: .bold))
                                 HStack{
                                     Image("coin")
-                                    Text("R$657,00")
+                                    Text(String(format: "R$%2.f",resource.spendMediaPrice))
                                 }
                                 .font(.system(size: 23, weight: .bold))
                                 
@@ -298,6 +301,7 @@ struct GastoMensalSheetView: View {
                     TextField("Quanditade gasta em \(resource.type.measurement)", value: $amount, formatter: formatter)
                     TextField("Valor gasto em R$", value: $price, formatter: formatter)
                     DatePicker("Data", selection: $date, displayedComponents: .date)
+                        .accentColor(resource.type.cor[1])
                 }
             }
             .foregroundStyle(Color.verdeEscuroDark)
@@ -321,6 +325,7 @@ struct GastoMensalSheetView: View {
                             amountToSave = amount
                         }
                         resourceViewModel.addSpending(resource: resource, amount: amountToSave, date: date, price: priceToSave)
+                        resourceViewModel.updateMedia(resource)
                         dismiss()
                     }
                     .foregroundStyle(.blue)

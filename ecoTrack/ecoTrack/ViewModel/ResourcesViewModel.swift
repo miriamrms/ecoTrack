@@ -11,20 +11,13 @@ import SwiftData
 class ResourcesViewModel: ObservableObject{
     
     @Published var resources: [ResourceData] = []
-    @Published var selectedResource: ResourceData?
-//    @Published var water: ResourceData = ResourceData(type: .agua)
-//    @Published var energy: ResourceData = ResourceData(type: .energia)
-//    @Published var waste: ResourceData = ResourceData(type: .residuos)
-    
+    @Published var company: CompanyData
+
     private let dataSource = SwiftDataService.shared
     
     init(dataSource: SwiftDataService) {
-//        let dummyResources = ResourceData.dummyResources
-//        for resource in dummyResources {
-//            dataSource.addResource(resource)
-//        }
         resources = dataSource.fetchResources()
-        printResources()
+        company = dataSource.fetchCompany().first!
     }
     
     func addSpending(resource: ResourceData, amount: Double, date: Date, price: Double){
@@ -34,7 +27,10 @@ class ResourcesViewModel: ObservableObject{
     
     func fetchResources(){
         resources = dataSource.fetchResources()
-        printResources()
+    }
+    
+    func updateMedia(_ resource: ResourceData){
+        dataSource.updateMedia(resource)
     }
     
     func printResources(){
@@ -47,17 +43,7 @@ class ResourcesViewModel: ObservableObject{
     func fetchResourcesTeste() -> [ResourceData]{
         return dataSource.fetchResources()
     }
-//    func changeSelectedResources(resourceType: Resources){
-//        resources = dataSource.fetchResources()
-//        for resource in resources {
-//            if resource.type == resourceType {
-//                selectedResource = resource
-//            }
-//            else{
-//            
-//            }
-//        }
-//    }
+
     func findSpendData(resoucesType: Resources) -> [SpendData]{
         let resources = dataSource.fetchResources()
         var spending: [SpendData] = []
@@ -71,6 +57,17 @@ class ResourcesViewModel: ObservableObject{
         return spending
     }
     
+    func MediaAnalysis(_ resourceType: Resources) -> Double{
+        if company.companySize == .micro {
+            return resourceType.microEmpresa
+        }
+        else if company.companySize == .pequena{
+            return resourceType.pequenaEmpresa
+        }
+        else{
+            return resourceType.mediaEmpresa
+        }
+    }
     
 }
 

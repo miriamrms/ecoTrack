@@ -13,13 +13,15 @@ class ResourceData: Identifiable {
     var id: String
     var type: Resources
     var history: [SpendData]
-    var spendMedia: Double
+    var spendMediaPrice: Double
+    var spendMediaAmount: Double
     
-    init(type: Resources, history: [SpendData] = [], spendMedia: Double = 0.0) {
+    init(type: Resources, history: [SpendData] = [], spendMedia: Double = 0.0, spendAmount: Double = 0.0) {
         id = UUID().uuidString
         self.type = type
         self.history = history
-        self.spendMedia = spendMedia
+        self.spendMediaPrice = spendMedia
+        self.spendMediaAmount = spendAmount
     }
 }
 @Model

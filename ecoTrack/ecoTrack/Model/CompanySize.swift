@@ -27,4 +27,15 @@ enum CompanySize: String, Identifiable, CaseIterable, Codable {
             return "porteMedio"
         }
     }
+    
+    var group: String {
+        switch self {
+        case .micro:
+            return "Empresas de Porte Micro"
+        case .pequena:
+            return "Empresas de Pequeno Porte"
+        case .media:
+            return "Empresas de Médio Porte"
+        }
+    }
 }
