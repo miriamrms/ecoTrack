@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ButtonView: View {
     
-    @State var valor: Double = 0.0
+    var resource: ResourceData
+    @State var valor: Double = 6.0
     var recursoType: Resources
     
     var body: some View {
@@ -63,7 +64,7 @@ struct ButtonView: View {
                 
                 Spacer() //alinhamento centralizado das informacoes inferiores
                     .frame(maxHeight: 13)
-                if valor == 0{
+                if resource.spendMediaAmount == 0{
                     
                     HStack{ //infos parte inferior nao preenchida
                         
@@ -95,7 +96,7 @@ struct ButtonView: View {
                     HStack{ //infos parte inferior
                         
                         Image("ruler")
-                        Text("100ml")
+                        Text("\(String(format: "R$%.2f", resource.spendMediaAmount))\(resource.type.measurement)")
                             .foregroundStyle(.white)
                             .font(.system(size: 16, weight:.bold))
                         
@@ -103,7 +104,7 @@ struct ButtonView: View {
                             .frame(maxWidth:27)
                         
                         Image("coin")
-                        Text("R$546,00")
+                        Text(String(format: "R$%.2f", resource.spendMediaPrice))
                             .foregroundStyle(.white)
                             .font(.system(size: 16, weight: .bold))
                         
@@ -120,5 +121,5 @@ struct ButtonView: View {
 }
 
 #Preview {
-    ButtonView(recursoType: .residuos)
+    ButtonView(resource: ResourceData(type: .residuos), recursoType: .residuos)
 }

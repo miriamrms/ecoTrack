@@ -7,12 +7,9 @@
 
 import SwiftUI
 
-
-
 struct CertificateView: View {
 
     var body: some View {
-        
         
         NavigationStack {
             VStack{
@@ -80,7 +77,6 @@ struct CertificateView: View {
                             .padding(.top, 10)
                         
                     }
-                    
                     
                 }
                 

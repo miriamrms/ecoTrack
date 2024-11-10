@@ -99,7 +99,7 @@ struct HomeView: View {
                                                 
                         ForEach(resourceViewModel.resources, id: \.id){ resource in
                             NavigationLink(destination: ResourceView(resourceType: resource.type, resource: resource).environmentObject(resourceViewModel)) {
-                                ButtonView(recursoType: resource.type)
+                                ButtonView(resource: resource, recursoType: resource.type)
                                     .frame(maxWidth: .infinity)
                             }
                         }
