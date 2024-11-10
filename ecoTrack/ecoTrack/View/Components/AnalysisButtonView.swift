@@ -10,10 +10,12 @@ import SwiftUI
 struct AnalysisButtonView: View {
     @EnvironmentObject var resourceViewModel: ResourcesViewModel
     
+    @State var showingAlert: Bool = false
+    
     var analysis: Analysis
     var resource: ResourceData
     
-    @State var showingAlert: Bool = false
+    
     var percent: Double {
         resourceViewModel.percentDiference(resource)
     }

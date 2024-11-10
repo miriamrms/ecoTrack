@@ -10,16 +10,16 @@ import SwiftUI
 
 struct ButtonView: View {
     
-    var resource: ResourceData
-    var recursoType: Resources
     @State var showGastoMensalSheet: Bool = false
+    
+    var resource: ResourceData
     
     var body: some View {
         
         ZStack(alignment: .top){
             
             Rectangle()//retangulo maior fundo claro
-                .foregroundStyle(recursoType.cor[0])
+                .foregroundStyle(resource.type.cor[0])
                 .frame(width: 353,height: 100)
                 .cornerRadius(8)
             
@@ -29,13 +29,13 @@ struct ButtonView: View {
                 ZStack {//retangulo superior escuro
                     UnevenRoundedRectangle (topLeadingRadius: 8, topTrailingRadius: 8)
                         .frame(width: 353, height: 50)
-                        .foregroundStyle(recursoType.cor[1])
+                        .foregroundStyle(resource.type.cor[1])
                     
                     
                     HStack{ //infos parte superior
-                        Image(recursoType.icone)
+                        Image(resource.type.icone)
                         
-                        Text(recursoType.rawValue)//nome do recurso
+                        Text(resource.type.rawValue)//nome do recurso
                             .foregroundStyle(.white)
                             .font(.system(size: 19, weight: .bold))
                         
@@ -128,5 +128,5 @@ struct ButtonView: View {
 }
 
 #Preview {
-    ButtonView(resource: ResourceData(type: .residuos), recursoType: .residuos)
+    ButtonView(resource: ResourceData(type: .residuos))
 }
