@@ -47,13 +47,22 @@ struct AnalysisButtonView: View {
                     .frame(maxWidth: 100)
                     Spacer()
                     if analysis == .comparative{
-                        Image(systemName: resourceViewModel.comparativeArrow(resource))
-                            .font(.system(size: 23, weight: .bold))
-                        Text(String(format: "%.2f%%", percent))
-                            .padding(.top, 23.5)
-                            .padding(.bottom, 23.5)
-                            .font(.system(size: 23, weight: .bold))
-                            .padding(.trailing,20)
+                        if percent != 100{
+                            Image(systemName: resourceViewModel.comparativeArrow(resource))
+                                .font(.system(size: 23, weight: .bold))
+                            Text(String(format: "%.2f%%", percent))
+                                .padding(.top, 23.5)
+                                .padding(.bottom, 23.5)
+                                .font(.system(size: 23, weight: .bold))
+                                .padding(.trailing,20)
+                        }
+                        else{
+                            Text("Adicione uma conta")
+                                .padding(.top, 23.5)
+                                .padding(.bottom, 23.5)
+                                .font(.system(size: 10, weight: .regular))
+                                .padding(.trailing,20)
+                        }
                     }
                     else{
                         Text(String(format: "R$%.2f", resourceViewModel.GeneralMediaAnalysis(resource.type)))
