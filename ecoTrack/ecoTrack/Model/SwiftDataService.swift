@@ -38,6 +38,17 @@ class SwiftDataService {
         }
     }
     
+    func editCompany(_ companyName: String, _ companySize: CompanySize) {
+        let company = fetchCompany().first!
+        company.name = companyName
+        company.companySize = companySize
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
     func fetchResources() -> [ResourceData] {
         do {
             return try modelContext.fetch(FetchDescriptor<ResourceData>())

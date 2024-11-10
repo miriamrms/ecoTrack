@@ -19,7 +19,7 @@ struct AnalysisButtonView: View {
     var percent: Double {
         resourceViewModel.percentDiference(resource)
     }
-   
+    
     var body: some View {
         
         Button {
@@ -30,10 +30,10 @@ struct AnalysisButtonView: View {
                     .fill(resource.type.cor[1])
                     .frame(maxHeight: 75)
                     .padding(.leading,12)
-
+                
                 HStack{
                     Image(analysis == .comparative ? resource.type.comparativeIcon : resource.type.mediaIcon)
-                        
+                    
                     VStack(alignment: .leading){
                         Text(analysis.rawValue)
                             .font(.system(size: 14, weight: .bold))
@@ -41,7 +41,7 @@ struct AnalysisButtonView: View {
                             Text(resourceViewModel.company.companySize.group)
                                 .multilineTextAlignment(.leading)
                                 .font(.system(size: 9.7, weight: .regular))
-                                
+                            
                         }
                     }
                     .frame(maxWidth: 100)
@@ -62,9 +62,9 @@ struct AnalysisButtonView: View {
                             .font(.system(size: 19, weight: .bold))
                             .padding(.trailing,20)
                             .frame(minWidth: 105)
-                           
+                        
                     }
-                   
+                    
                 }
                 .foregroundStyle(Color.white)
                 
@@ -80,9 +80,9 @@ struct AnalysisButtonView: View {
                 Alert(title: Text(analysis.rawValue), message: Text("A média mensal de gastos com \(resource.type.rawValue) de \(resourceViewModel.company.companySize.group) é R$ \(String(format: "R$%.2f", resourceViewModel.GeneralMediaAnalysis(resource.type)))"), dismissButton: .default(Text("OK")))
             }
         }
-
         
-       
+        
+        
     }
 }
 
