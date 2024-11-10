@@ -80,9 +80,6 @@ struct AnalysisButtonView: View {
                 Alert(title: Text(analysis.rawValue), message: Text("A média mensal de gastos com \(resource.type.rawValue) de \(resourceViewModel.company.companySize.group) é R$ \(String(format: "R$%.2f", resourceViewModel.GeneralMediaAnalysis(resource.type)))"), dismissButton: .default(Text("OK")))
             }
         }
-        
-        
-        
     }
 }
 

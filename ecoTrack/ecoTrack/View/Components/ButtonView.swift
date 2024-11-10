@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ButtonView: View {
     
+    @EnvironmentObject var resourceViewModel: ResourcesViewModel
     @State var showGastoMensalSheet: Bool = false
     
     var resource: ResourceData
@@ -106,6 +107,9 @@ struct ButtonView: View {
                         Text("\(String(format: "R$%.2f", resource.spendMediaAmount))\(resource.type.measurement)")
                             .foregroundStyle(.white)
                             .font(.system(size: 16, weight:.bold))
+                            .frame(minWidth: 110, alignment: .leading)
+                        
+                            
                         
                         Spacer()//espaco entre ml e coin icon
                             .frame(maxWidth:27)
@@ -114,6 +118,7 @@ struct ButtonView: View {
                         Text(String(format: "R$%.2f", resource.spendMediaPrice))
                             .foregroundStyle(.white)
                             .font(.system(size: 16, weight: .bold))
+                            .frame(minWidth: 108, alignment: .leading)
                         
                         Spacer()
                             .frame(maxWidth: .infinity)
