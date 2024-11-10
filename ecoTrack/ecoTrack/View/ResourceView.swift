@@ -173,7 +173,7 @@ struct ResourceView: View {
 struct HistorySheetView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var resourceViewModel: ResourcesViewModel
-    @State private var selectionYear = "2024"
+    @State private var selectedYear = "2024"
     @State var isShowingYearPicker = false
     var resourceType: Resources
     var spending: [SpendData] {
@@ -189,13 +189,6 @@ struct HistorySheetView: View {
         return []
     }
     
-    var teste: [SpendData] = [.init(
-        resource: ResourceData(type: .agua),
-        data: .init(),
-        price: 44,
-        amount: 23
-    )]
-    
     //    var resource: ResourceData
     var body: some View {
         VStack(spacing: 18){
@@ -208,7 +201,7 @@ struct HistorySheetView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 6)
                         HStack {
-                            Text(selectionYear)
+                            Text(selectedYear)
                             Image(systemName: "chevron.down")
                         }
                         .foregroundStyle(Color.white)
@@ -217,7 +210,7 @@ struct HistorySheetView: View {
                     
                 }
                 .sheet(isPresented: $isShowingYearPicker){
-                    YearPickerView(selectionYear: $selectionYear)
+                    YearPickerView(selectionYear: $selectedYear)
                         .presentationDetents([.fraction((0.35))])
                 }
                 
@@ -239,30 +232,25 @@ struct HistorySheetView: View {
             
             ScrollView(.vertical) {
                 
-                //                ForEach(resourceViewModel.resources, id: \.id) { r in
-                //                    Text(r.type.rawValue)
-                //                    Text("\(r.history)")
-                //                }
-                //                .foregroundStyle(Color.black)
-                
                 ForEach(spending){gasto in
-//                    let components = gasto.data.get(.day, .month, .year)
-                    HStack{
-//                        if let month = components.month{
-//                            Text("\(month)")
-//                        }
-                        Text("\(formatMonth(date: gasto.data))")
-                            .font(.system(size: 19, weight: .bold))
-                        Spacer()
-                        Text(String(format: "%.2f", gasto.amount))
-                            .font(.system(size: 19, weight: .regular))
-                        Spacer()
-                        Text(String(format: "R$%.2f", gasto.price))
-                            .font(.system(size: 19, weight: .regular))
+                    let components = gasto.data.get(.day, .month, .year)
+                    if let year = components.year{
+                        if year == Int(selectedYear){
+                            HStack{
+                                Text("\(formatMonth(date: gasto.data))")
+                                    .font(.system(size: 19, weight: .bold))
+                                Spacer()
+                                Text(String(format: "%.2f", gasto.amount))
+                                    .font(.system(size: 19, weight: .regular))
+                                Spacer()
+                                Text(String(format: "R$%.2f", gasto.price))
+                                    .font(.system(size: 19, weight: .regular))
+                            }
+                            Divider()
+                                .frame(height: 1)
+                                .overlay(.azulEscuroDark)
+                        }
                     }
-                    Divider()
-                        .frame(height: 1)
-                        .overlay(.azulEscuroDark)
                 }
                 .foregroundStyle(Color.azulEscuroDark)
                 
@@ -339,7 +327,7 @@ extension Date {
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
         return calendar.dateComponents(Set(components), from: self)
     }
-
+    
     func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: self)
     }

@@ -123,8 +123,7 @@ struct ButtonView: View {
                         Spacer()
                             .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: 329)//.infinity)
-                    //.background(Color.gray)
+                    .frame(maxWidth: 329)
                 }
             }
         }
