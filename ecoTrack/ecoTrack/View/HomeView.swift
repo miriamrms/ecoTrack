@@ -43,12 +43,10 @@ struct HomeView: View {
                         Button(action:  {
                             ShowModal.toggle()
                             
-                        }
-                            
-                            ,label: {
-                                Image("edit").padding(.top, 10)
-                                    })
-                            
+                        },label: {
+                            Image("edit").padding(.top, 10)
+                        })
+                        
                     }.frame(maxWidth: .infinity)
                         .sheet(isPresented: $ShowModal) {
                             EditProfileView()
@@ -72,6 +70,7 @@ struct HomeView: View {
                         ForEach(resourceViewModel.resources, id: \.id){ resource in
                             NavigationLink(destination: ResourceView(resourceType: resource.type, resource: resource).environmentObject(resourceViewModel)) {
                                 ButtonView(resource: resource)
+                                    .environmentObject(resourceViewModel)
                                     .frame(maxWidth: .infinity)
                             }
                         }
