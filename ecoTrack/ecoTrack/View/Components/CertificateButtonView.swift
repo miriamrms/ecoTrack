@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CertificateButtonView: View {
     
-    var certificate: Certificate
+    var certificate: CertificateType
     
     var body: some View {
         ZStack {

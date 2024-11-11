@@ -6,7 +6,7 @@
 //
 
 
-enum Certificate: String, CaseIterable {
+enum CertificateType: String, CaseIterable, Codable {
     case iso = "ISO 1401 "
     case seloverde = "Selo Verde"
     

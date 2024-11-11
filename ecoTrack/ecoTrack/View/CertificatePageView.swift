@@ -11,12 +11,15 @@ import SwiftUI
 //MARK: - INTERFACE
 struct CertificatePageView: View {
     
-    
-    @State var certificateProgressPage: Double = 100
+    @EnvironmentObject var certificateViewModel: CertificateViewModel
+//    @State var certificateProgressPage: Double = 50
     @State private var isSheetWhatPresented = false
     @State private var isSheetBenefitsPresented = false
     
-    var certificate: Certificate
+    @State var isChecked: Bool = false
+    
+    var certificateType: CertificateType
+    var certificate: CertificateData
     
     var body: some View {
         
@@ -42,7 +45,7 @@ struct CertificatePageView: View {
                     .padding(.top, 34)
                 
                 
-                Text(certificate.rawValue)
+                Text(certificate.type.rawValue)
                     .font(
                         Font.system(size: 23)
                             .weight(.bold)
@@ -65,13 +68,13 @@ struct CertificatePageView: View {
                         
                         Rectangle()
                             .foregroundColor(.clear)
-                            .frame(width: CGFloat(certificateProgressPage), height: 10)
+                            .frame(width: CGFloat(191*certificate.progress/100), height: 10)
                             .background(Color(.verdeClaro))
                             .cornerRadius(25)
                         
                     }
                     
-                    Text("70%")
+                    Text(String(format: "%.1f%%", certificate.progress))
                         .font(
                             Font.system(size: 14)
                                 .weight(.bold)
@@ -128,7 +131,7 @@ struct CertificatePageView: View {
                     
                     //SAIBA MAIS
                     Button {
-                        openLinkCert(certificate: certificate)
+                        openLinkCert(certificate: certificate.type)
                     } label: {
                         VStack{
                             Image("3dots")
@@ -162,22 +165,19 @@ struct CertificatePageView: View {
                 .padding(.leading, 20)
                 .frame(maxWidth: .infinity)
                 
-                ForEach(certificate.goals, id: \.self){ goal in
+                ForEach(certificate.actions.sorted { $0.name < $1.name }){ action in
                     VStack {
                         HStack {
-                            CheckboxView()
-                            Text(goal)
+                            CheckboxView(action: action, certificate: certificate)
+                            Text(action.name)
                                 .font(Font.system(size: 14))
                                 .foregroundColor(Color(red: 0.04, green: 0.16, blue: 0.29))
                                 .frame(width: 314, height: 40, alignment: .leading)
-                            
-                            
                             Spacer()
                         }
                         .padding(.leading, 25)
                         .frame(maxWidth: .infinity)
                     }
-                    
                     Rectangle()
                         .foregroundColor(.clear)
                         .frame(width: 353, height: 1)
@@ -191,16 +191,13 @@ struct CertificatePageView: View {
         
         .sheet(isPresented: $isSheetWhatPresented) {
             // A View que será exibida no sheet
-            SheetWhatView(isPresented: $isSheetWhatPresented, certificate:certificate)
+            SheetWhatView(isPresented: $isSheetWhatPresented, certificate:certificateType)
         }
         
         .sheet(isPresented: $isSheetBenefitsPresented) {
-            SheetBenefitsView(isPresented: $isSheetBenefitsPresented, certificate:certificate)
+            SheetBenefitsView(isPresented: $isSheetBenefitsPresented, certificateType:certificateType)
         }
-        
-        
-        
-        
+    
         Spacer()
         
     }
@@ -208,7 +205,7 @@ struct CertificatePageView: View {
     //MARK: - FUNCOES
     
     //Abrir Link
-    func openLinkCert(certificate: Certificate) {
+    func openLinkCert(certificate: CertificateType) {
         if let url = URL(string: certificate.link) {
             UIApplication.shared.open(url)
         } else {
@@ -227,7 +224,7 @@ struct SheetWhatView: View {
     
     @Binding var isPresented: Bool
     
-    var certificate: Certificate
+    var certificate: CertificateType
     
     var body: some View {
         VStack {
@@ -285,7 +282,7 @@ struct SheetBenefitsView: View {
     
     @Binding var isPresented: Bool
     
-    var certificate: Certificate
+    var certificateType: CertificateType
     
     var body: some View {
         VStack {
@@ -301,7 +298,7 @@ struct SheetBenefitsView: View {
                 .foregroundColor(Color(.azulEscuro))
             
             VStack(alignment: .leading) {
-                ForEach(certificate.benefits, id: \.self){ benefits in
+                ForEach(certificateType.benefits, id: \.self){ benefits in
                     HStack{
                         Image("star")
                         
@@ -348,5 +345,6 @@ struct SheetBenefitsView: View {
 }
 
 #Preview {
-    CertificatePageView(certificate: .seloverde)
+    CertificatePageView(certificateType: .seloverde, certificate: CertificateData(type: .seloverde, actions: [], progress: 0.0))
+        .environmentObject(CertificateViewModel(dataSource: .shared))
 }
