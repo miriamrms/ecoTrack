@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CertificateView: View {
+    @StateObject var certificateViewModel: CertificateViewModel = CertificateViewModel(dataSource: .shared)
 
     var body: some View {
-        
         NavigationStack {
             VStack{
                 ZStack(alignment: .topLeading) {
@@ -67,14 +67,32 @@ struct CertificateView: View {
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)
-                        //                    .overlay{
-                        //                        Rectangle()
-                        //                            .stroke(.red)
-                        //                    }
                         .padding(.leading, 20)
                         
-                        CertificateCardView()
-                            .padding(.top, 10)
+                        if certificateViewModel.isAnyCertificateInProgress() {
+                            
+                            ScrollView(.horizontal, showsIndicators: false){
+                                HStack{
+                                    ForEach(certificateViewModel.certificates, id: \.self){
+                                        certificate in
+                                        if certificate.progress > 0 {
+                                            CertificateCardView( certificate: certificate)
+                                                .environmentObject(certificateViewModel)
+                                                .padding(.top, 10)
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal, 20)
+                            }
+                        }
+                        else{
+                            HStack{
+                                NoCertificateInProgressView()
+                            }
+                            .padding(.horizontal, 20)
+                        }
+                        
+                        
                         
                     }
                     
@@ -98,13 +116,23 @@ struct CertificateView: View {
                 .padding(.leading, 20)
                 .padding(.top, 20)
                 
-                ForEach(Certificate.allCases, id: \.self){ certificate in
-                    NavigationLink {
-                        CertificatePageView(certificate: certificate)
+//                ForEach(Certificate.allCases, id: \.self){ certificate in
+//                    NavigationLink {
+//                        CertificatePageView(certificate: certificate)
+//                    } label: {
+//                        CertificateButtonView(certificate: certificate)
+//                    }
+//                }
+                
+                ForEach(certificateViewModel.certificates){ certificate in
+                    NavigationLink{
+                        CertificatePageView(certificateType: certificate.type, certificate: certificate)
+                            .environmentObject(certificateViewModel)
                     } label: {
-                        CertificateButtonView(certificate: certificate)
+                        CertificateButtonView(certificate: certificate.type)
                     }
                 }
+        
                 
                 Spacer()
             }

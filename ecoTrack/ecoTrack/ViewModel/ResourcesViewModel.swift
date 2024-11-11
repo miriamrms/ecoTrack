@@ -11,12 +11,15 @@ import SwiftData
 class ResourcesViewModel: ObservableObject{
     
     @Published var resources: [ResourceData] = []
+    @Published var certificates: [CertificateData] = []
     @Published var company: CompanyData
+    
 
     private let dataSource = SwiftDataService.shared
     
     init(dataSource: SwiftDataService) {
         resources = dataSource.fetchResources()
+        certificates = dataSource.fetchCertificates()
         company = dataSource.fetchCompany().first!
     }
     
@@ -125,6 +128,16 @@ class ResourcesViewModel: ObservableObject{
             else{
                 return "arrowtriangle.down.fill"
             }
+        }
+    }
+    
+    func isAnyCertificateInProgress() -> Bool {
+        let certificatesInProgress = certificates.filter{ $0.progress > 0}.count
+        if certificatesInProgress > 0 {
+            return true
+        }
+        else{
+            return false
         }
     }
     

@@ -22,6 +22,7 @@ struct LoginButton: View {
                 companyViewModel.addCompany(name: name, companySize: companySize)
                 showHomePage.toggle()
                 companyViewModel.addFixedResources()
+                companyViewModel.addFixedCertificates()
             }
             else{
                 isShowingAlert = true

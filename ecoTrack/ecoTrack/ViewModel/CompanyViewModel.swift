@@ -39,9 +39,14 @@ class CompanyViewModel: ObservableObject{
         for resource in dummyResources {
             dataSource.addResource(resource)
         }
-        
     }
-
+    
+    func addFixedCertificates(){
+        let fixedCertificates = CertificateData.fixedCertificates
+        for certificate in fixedCertificates {
+            dataSource.addCertificate(certificate)
+        }
+    }
 }
 
 extension ResourceData {
@@ -51,4 +56,5 @@ extension ResourceData {
         ResourceData(type: .residuos)
     ]
 }
+
 

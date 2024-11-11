@@ -17,9 +17,11 @@ class SwiftDataService {
     @MainActor
     private init() {
         // Change isStoredInMemoryOnly to false if you would like to see the data persistance after kill/exit the app
-        self.modelContainer = try! ModelContainer(for: ResourceData.self, CompanyData.self, SpendData.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
+        self.modelContainer = try! ModelContainer(for: ResourceData.self, CompanyData.self, SpendData.self, CertificateData.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
         self.modelContext = modelContainer.mainContext
     }
+    
+    //MARK: Company Functions
     
     func fetchCompany() -> [CompanyData] {
         do {
@@ -48,6 +50,8 @@ class SwiftDataService {
             fatalError(error.localizedDescription)
         }
     }
+    
+    //MARK: Resources Functions
     
     func fetchResources() -> [ResourceData] {
         do {
@@ -92,4 +96,44 @@ class SwiftDataService {
             fatalError(error.localizedDescription)
         }
     }
+    
+    //MARK: Certificates Function
+    
+    func fetchCertificates() -> [CertificateData]{
+        do {
+            return try modelContext.fetch(FetchDescriptor<CertificateData>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addCertificate(_ certificate: CertificateData) {
+        modelContext.insert(certificate)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func updateAction(_ action: Action) {
+        action.isVerified.toggle()
+        modelContext.insert(action)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func updateProgress(_ progress: Double, _ certificate: CertificateData) {
+        certificate.progress = progress
+        modelContext.insert(certificate)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
 }

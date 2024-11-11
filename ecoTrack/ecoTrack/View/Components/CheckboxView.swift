@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct CheckboxView: View {
+    @EnvironmentObject var certificateViewModel: CertificateViewModel
+    
+    var action: Action
+    var certificate: CertificateData
     
     @State var isChecked: Bool = false
     
@@ -15,16 +19,12 @@ struct CheckboxView: View {
         
         
         Button {
-            if isChecked == false {
-                isChecked = true
-            } else {
-                isChecked = false
-            }
-            
+            certificateViewModel.updateAction(action)
+            certificateViewModel.updateProgress(certificate)
         } //botao de recursos preenchido
         
         label: {
-            if isChecked == false {
+            if !action.isVerified{
                 Rectangle()
                     .foregroundColor(.clear)
                     .frame(width: 25, height: 25)
@@ -58,5 +58,6 @@ struct CheckboxView: View {
 }
 
 #Preview {
-    CheckboxView()
+    CheckboxView(action: Action(name: "sajhs"), certificate: CertificateData(type: .iso, actions: [Action(name: "")]))
+        .environmentObject(CertificateViewModel(dataSource: .shared))
 }

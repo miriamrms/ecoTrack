@@ -98,8 +98,26 @@ struct HomeView: View {
                     
                     Spacer().frame(height: 10)
                     
-                    CertificateCardView()
-                        .frame(maxWidth: .infinity)
+//                    CertificateCardView()
+//                        .frame(maxWidth: .infinity)
+                    
+                    if resourceViewModel.isAnyCertificateInProgress() {
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack{
+                                ForEach(resourceViewModel.certificates, id: \.self){
+                                    certificate in
+                                    if certificate.progress > 0 {
+                                        CertificateCardView( certificate: certificate)
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        NoCertificateInProgressView()
+                            .frame(maxWidth: .infinity)
+                    }
 
                     
                     Spacer().frame(height: 10)
