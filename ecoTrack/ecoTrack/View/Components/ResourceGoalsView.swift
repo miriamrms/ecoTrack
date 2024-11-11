@@ -51,7 +51,7 @@ struct ResourceGoalsView: View {
                         HStack{
                             Text("Investimento Inicial")
                             Spacer()
-                            Text("A partir de R$ 400")
+                            Text("A partir de R$\(goal[1])")
                         }
                         .font(.system(size: 13.32, weight: .bold))
                     }
@@ -69,7 +69,7 @@ struct ResourceGoalsView: View {
                         HStack{
                             Text("Economia a longo prazo")
                             Spacer()
-                            Text("Até -10% de gasto mensal")
+                            Text("\(goal[2])")
                         }
                         .font(.system(size: 13.32, weight: .bold))
                     }
@@ -108,5 +108,5 @@ struct UnevenRectangle: Shape {
     }
 }
 #Preview {
-    ResourceGoalsView(resource: .agua, goal: [""])
+    ResourceGoalsView(resource: .agua, goal: ["","",""])
 }

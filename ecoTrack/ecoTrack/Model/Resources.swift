@@ -125,11 +125,11 @@ enum Resources: String, CaseIterable, Codable{
     var goals: [[String]]{
         switch self {
         case .agua:
-            return [["Instalação de arejadores"],["Instalação de calhas e cisternas para captação de água de chuva"]]
+            return [["Instalação de arejadores","40,92","Até -75% do gasto mensal"],["Instalação de calhas e cisternas para captação de água de chuva","3.665,00","Até -80% do gasto mensal"]]
         case .energia:
-            return [["Fazer adaptações no espaço com pontos de entrada para luz e vento"],["Substituir lâmpadas fluorescentes por LED"]]
+            return [["Fazer adaptações no espaço com pontos de entrada para luz e vento","409,8","Até -60% do gasto mensal"],["Substituir lâmpadas fluorescentes por LED","28,45","Até -60% do gasto mensal"]]
         case .residuos:
-            return [["Implantar coleta seletiva com os colaboradores e clientes"], ["Reduzir uso do papel"],["Incentivar o fim do uso de descartáveis pelos colaboradores"]]
+            return [["Implantar coleta seletiva com os colaboradores e clientes","274,97","Até -30% do gasto mensal"], ["Reduzir uso do papel","29,90","Até -30% do gasto mensal"],["Incentivar o fim do uso de descartáveis pelos colaboradores","150,00","Até -30% do gasto mensal"]]
         }
     }
 }
