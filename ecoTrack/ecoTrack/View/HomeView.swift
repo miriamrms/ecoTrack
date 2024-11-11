@@ -98,8 +98,8 @@ struct HomeView: View {
                     
                     Spacer().frame(height: 10)
                     
-                    CertificateCardView()
-                        .frame(maxWidth: .infinity)
+//                    CertificateCardView()
+//                        .frame(maxWidth: .infinity)
 
                     
                     Spacer().frame(height: 10)

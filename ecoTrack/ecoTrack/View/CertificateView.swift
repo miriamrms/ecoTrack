@@ -69,8 +69,30 @@ struct CertificateView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.leading, 20)
                         
-                        CertificateCardView()
-                            .padding(.top, 10)
+                        if certificateViewModel.isAnyCertificateInProgress() {
+                            
+                            ScrollView(.horizontal, showsIndicators: false){
+                                HStack{
+                                    ForEach(certificateViewModel.certificates, id: \.self){
+                                        certificate in
+                                        if certificate.progress > 0 {
+                                            CertificateCardView( certificate: certificate)
+                                                .environmentObject(certificateViewModel)
+                                                .padding(.top, 10)
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal, 20)
+                            }
+                        }
+                        else{
+                            HStack{
+                                NoCertificateInProgressView()
+                            }
+                            .padding(.horizontal, 20)
+                        }
+                        
+                        
                         
                     }
                     

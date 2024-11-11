@@ -32,6 +32,15 @@ class CertificateViewModel: ObservableObject{
         let progress = getProgress(certificate)
         dataSource.updateProgress(progress, certificate)
     }
+    func isAnyCertificateInProgress() -> Bool {
+        let certificatesInProgress = certificates.filter{ $0.progress > 0}.count
+        if certificatesInProgress > 0 {
+            return true
+        }
+        else{
+            return false
+        }
+    }
 }
 
 extension CertificateData {
