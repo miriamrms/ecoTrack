@@ -47,7 +47,6 @@ class CompanyViewModel: ObservableObject{
             dataSource.addCertificate(certificate)
         }
     }
-
 }
 
 extension ResourceData {
