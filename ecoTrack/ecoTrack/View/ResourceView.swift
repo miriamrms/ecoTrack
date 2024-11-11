@@ -148,8 +148,9 @@ struct ResourceView: View {
                     .padding(.leading, 15)
                     
                     VStack(spacing: 12){
-                        ResourceGoalsView(resource: resourceType)
-                        ResourceGoalsView(resource: resourceType)
+                        ForEach(resourceType.goals, id: \.self){ goal in
+                            ResourceGoalsView(resource: resourceType, goal: goal)
+                        }
                     }
                     .padding(.bottom, 30)
                     

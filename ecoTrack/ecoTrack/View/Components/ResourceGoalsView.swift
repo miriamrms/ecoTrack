@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ResourceGoalsView: View {
     var resource: Resources
+    var goal: [String]
     var body: some View {
         VStack(spacing: -5){
             ZStack {
@@ -19,7 +20,7 @@ struct ResourceGoalsView: View {
                 HStack(spacing: 13){
                     Image(resource.singleIcon)
                         .padding(.leading, 15)
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                    Text(goal[0])
                         .font(.system(size: 13.3, weight: .bold))
                         .padding(.top, 15.5)
                         .padding(.bottom, 15.5)
@@ -107,5 +108,5 @@ struct UnevenRectangle: Shape {
     }
 }
 #Preview {
-    ResourceGoalsView(resource: .agua)
+    ResourceGoalsView(resource: .agua, goal: [""])
 }
