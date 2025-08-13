@@ -84,11 +84,13 @@ struct AnalysisButtonView: View {
         .alert(isPresented: $showingAlert) {
             if analysis == .comparative{
                 Alert(title: Text(analysis.rawValue), message: Text(resourceViewModel.returnAnalysis(resource)), dismissButton: .default(Text("OK")))
+
             }
             else{
                 Alert(title: Text(analysis.rawValue), message: Text("A média mensal de gastos com \(resource.type.rawValue) de \(resourceViewModel.company.companySize.group) é R$ \(String(format: "R$%.2f", resourceViewModel.GeneralMediaAnalysis(resource.type)))"), dismissButton: .default(Text("OK")))
             }
         }
+        .tint(.azulEscuroDark)
     }
 }
 

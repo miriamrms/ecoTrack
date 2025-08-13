@@ -12,9 +12,9 @@ class MetasViewModel: ObservableObject {
         Meta(tipo: .agua, descricao: "Reduzir consumo de água", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
         Meta(tipo: .energia, descricao: "Economizar energia", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
         Meta(tipo: .energia, descricao: "Usar equipamentos que economizam energia", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
-        Meta(tipo: .agua, descricao: "Instalar torneiras automaticas", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
+        Meta(tipo: .agua, descricao: "Instalar torneiras automáticas", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false),
         Meta(tipo: .residuos, descricao: "Reduzir resíduos", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: true),
-        Meta(tipo: .residuos, descricao: "Reciclar residuos", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false)
+        Meta(tipo: .residuos, descricao: "Reciclar resíduos", investimentoInicial: 100.0, porcentagemReducao: 10, concluida: false)
     ]
     
     @Published var showAddMetaSheet = false
