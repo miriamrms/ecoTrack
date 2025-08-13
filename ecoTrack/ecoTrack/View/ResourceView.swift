@@ -158,6 +158,12 @@ struct ResourceView: View {
                 .frame(maxWidth: .infinity)
             }
         }
+        .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        BackButton()
+                    }
+                }
         .onAppear() {
             
         }
@@ -286,7 +292,7 @@ struct GastoMensalSheetView: View {
             Form{
                 Text("Adicionar um Gasto de \(resource.type.rawValue)")
                 Section{
-                    TextField("Quanditade gasta em \(resource.type.measurement)", value: $amount, formatter: formatter)
+                    TextField("Quantidade gasta em \(resource.type.measurement)", value: $amount, formatter: formatter)
                     TextField("Valor gasto em R$", value: $price, formatter: formatter)
                     DatePicker("Data", selection: $date, displayedComponents: .date)
                         .accentColor(resource.type.cor[1])

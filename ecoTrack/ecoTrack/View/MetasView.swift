@@ -8,7 +8,10 @@
 import SwiftUI
 
 enum TipoMeta: String, CaseIterable {
-    case geral, agua, energia, residuos
+    case geral = "Geral"
+    case agua = "Água"
+    case energia = "Energia"
+    case residuos = "Resíduos"
 
     var icone: String {
         switch self {

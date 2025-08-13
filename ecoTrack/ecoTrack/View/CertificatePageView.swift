@@ -348,3 +348,21 @@ struct SheetBenefitsView: View {
     CertificatePageView(certificateType: .seloverde, certificate: CertificateData(type: .seloverde, actions: [], progress: 0.0))
         .environmentObject(CertificateViewModel(dataSource: .shared))
 }
+
+struct BackButton: View {
+    @Environment(\.presentationMode) var presentationMode
+    var body: some View {
+        Button(action: {
+            presentationMode.wrappedValue.dismiss()
+        }) {
+            HStack {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.white)
+                Text("Back")
+                    .foregroundColor(.white)
+            }
+        }
+    }
+}
+
+
